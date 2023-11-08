@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Solicitudes de turnos</h1>
+
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<div id="appointments">
+  <% @appointments.each do |appointment| %>
+    <% if appointment.state != 1 && appointment.state !=4 %> <!-- muestra todos menos los confirmados y cancelados -->
+      <%= render appointment %>
+      <p>
+      <%= link_to "Seleccionar turno", request_path(appointment) %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
+
+

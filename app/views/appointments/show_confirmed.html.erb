@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @appointment %>
+
+<div>
+
+  <%= link_to "Volver atras", confirmed_path %>
+  <%= link_to "Cancelar turno", confirm_cancel_appointment_path(@appointment, source: "cancel_from_confirmed") %> 
+  <%= link_to "Editar turno", edit_appointment_path(@appointment, source: "confirmed") %> 
+</div>

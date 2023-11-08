@@ -1,0 +1,13 @@
+<h1>Editando turno</h1>
+
+<%= render "form", appointment: @appointment, from: @source %>
+
+<div>
+  <% if params[:source] == "confirmed" %>
+    <%= link_to "Volver atras", confirmed_path %>
+  <% elsif params[:source] == "request" %>
+    <%= link_to "Volver atras", requests_path %>
+  <% elsif params[:source] == "user" %>
+    <%= link_to "Volver atras", @appointment %> |
+  <% end %>  
+</div>

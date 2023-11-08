@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @appointment %>
+
+<div>
+  <!-- SI NO ESTA CANCELADO MUESTRA PARA EDITAR Y UN ELIMINAR CON CONFIRMACION-->
+  <% if @appointment.state != 4 %>
+    <%= link_to "Editar turno", edit_appointment_path(@appointment, source: "user") %> 
+    <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment) %>|
+  <% end %>
+  <%= link_to "Volver atras", appointments_path %>
+
+  <!-- SI ESTA REPROG POR LA VT MUESTRA PARA CONFIRMAR-->
+  <% if @appointment.state == 3 %>
+    <%= form_with(model: @appointment, url: confirm_admin_edit_path(@appointment), method: :patch, local: true) do |form| %>
+      <%= form.hidden_field :state, value: 1 %> 
+      <%= form.submit "Confirmar reprogramación" %>
+    <% end %>
+  <% end %>
+
+  <!-- SI ESTA CANCELADO POR LA VT MUESTRA PARA BORRAR DE UNA-->
+  <% if @appointment.state == 4%>
+    <%= button_to "Eliminar turno", @appointment, method: :delete %>
+  <% end %>
+</div>
