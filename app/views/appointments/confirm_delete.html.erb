@@ -1,0 +1,10 @@
+<h1>Confirmar eliminación</h1>
+<p>¿Seguro que deseas eliminar este turno? No hay vuelta atras</p>
+
+<p>
+  <strong>Horario:</strong>
+  <%= @appointment.time.strftime("%d-%m-%Y %H:%M") %>
+</p>
+
+<%= button_to "Confirmar", @appointment, method: :delete %>
+<%= link_to "Cancelar", appointment_path %>

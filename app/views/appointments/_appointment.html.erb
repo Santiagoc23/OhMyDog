@@ -1,0 +1,30 @@
+<div id="<%= dom_id appointment %>">
+  <p>
+    <strong>Horario:</strong>
+    <%= appointment.time.strftime("%d/%m/%Y %H:%M") %>
+  </p>
+
+  <p>
+  <strong>Estado:</strong>
+  <% case appointment.state %>
+    <% when 0 %>
+      Pendiente de confirmación
+    <% when 1 %>
+      Confirmado
+    <% when 2 %>
+      Esperando que veterinaria confirme el nuevo horario 
+    <% when 3 %>
+      Veterinaria quiere reprogramar 
+    <% when 4 %>
+      Veterinaria canceló el turno
+    <% else %>
+      <%= "Ocurrió un error recuperando el estado del turno." %>
+    <% end %>
+</p>
+
+  <p>
+    <strong>Mensaje de la veterinaria:</strong>
+    <%= appointment.message %>
+  </p>
+
+</div>

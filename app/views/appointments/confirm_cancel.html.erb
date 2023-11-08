@@ -1,0 +1,9 @@
+<%= render "form_confirm_cancel", appointment: @appointment, from: @source %>
+
+<div>
+  <% if params[:source] == "cancel_from_confirmed" %>
+    <%= link_to "Volver atras", confirmed_path %>
+  <% elsif params[:source] == "cancel_from_request" %>
+    <%= link_to "Volver atras", requests_path %>
+  <% end %>
+</div>

@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @appointment %>
+
+<div>
+  <%= link_to "Editar solicitud", edit_appointment_path(@appointment, source: "request") %> 
+  <%= link_to "Volver atras", requests_path %>
+  <% if @appointment.state != 3 %> <!-- NO PUEDE CONFIRMAR LOS MISMOS DE LA VETERINARIA-->
+    <%= form_with(model: @appointment, url: confirm_user_edit_path(@appointment), method: :patch) do |form| %>
+      <%= form.hidden_field :state, value: 1 %>
+      <%= form.submit "Confirmar turno" %>
+    <% end %>
+  <% end %>
+  <%= link_to "Cancelar turno", confirm_cancel_appointment_path(@appointment, source: "cancel_from_request") %> |
+</div>

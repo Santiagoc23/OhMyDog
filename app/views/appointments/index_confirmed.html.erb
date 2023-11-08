@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Turnos confirmados</h1>
+
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<div id="appointments">
+  <% @appointments.each do |appointment| %>
+    <% if appointment.state == 1 %> <!-- muestra solo confirmados -->
+      <%= render appointment %>
+      <p>
+      <%= link_to "Seleccionar turno", confirmed_show_path(appointment) %>
+      </p>
+    <% end %>
+  <% end %>
+</div>

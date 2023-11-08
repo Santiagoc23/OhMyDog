@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Mis turnos</h1>
+
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<div id="appointments">
+  <% @appointments.each do |appointment| %>
+    <% if appointment.user_id == 1 %> <!-- REEMPLAZAR 1 CON EL COMANDO PARA OBTENER EL ID DEL USUARIO ACTUAL -->
+      <%= render appointment %>
+      <p>
+      <%= link_to "Seleccionar turno", appointment %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "Crear nuevo turno", new_appointment_path %>
