@@ -20,6 +20,12 @@
   border-top-right-radius: 0;
 }
 </style>
+<!-- Outer Row -->
+<div class="row justify-content-center">
+           <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+               <div class="card-body p-0">
+                <div class="row">
 
 <div class="d-flex align-items-center py-4 bg-body-tertiary">
   <div class="form-signin w-100 m-auto">
@@ -35,22 +41,21 @@
         <%= f.password_field :password, autocomplete: "current-password", class:"form-control", id:"floatingPassword", placeholder:"Password" %>
         <%= f.label :contraseña, for:"floatingPassword" %>
       </div>
-      <% if devise_mapping.rememberable? %>
-        <div class="form-check text-start my-3">
-          <%= f.check_box :remember_me, class:"form-check-input", value:"remember-me", id:"flexCheckDefault"%>
-          <%= f.label :"Recordar contraseña", class:"form-check-label", for:"flexCheckDefault" %>
-        </div>
-      <% end %>
-        
-      <div class="actions">
-        <%= f.submit "Iniciar Sesion", class:"btn btn-primary w-100 py-2", data: { turbo: false } %>
-      </div>
-
-      <div class="text-start my-3">
-        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-          <%= link_to "¿Has olvidado tu contraseña?", new_password_path(resource_name), class:"recoverable-link", :style=>'text-decoration:none' %>
+    
+      <div class="text-center">
+        <% if alert %>
+          <p class="alert alert-danger p-1"><%= alert %></p>
         <% end %>
+      </div>
+        
+      <div class="actions my-2">
+        <%= f.submit "Iniciar Sesion", class:"btn btn-primary w-100 my-2 py-2", data: { turbo: false } %>
       </div>
     <% end %>
   </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
