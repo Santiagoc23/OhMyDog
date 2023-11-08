@@ -1,0 +1,30 @@
+<div class="container-fluid py-3">
+    <h2>Administardores</h2>
+    <button class="btn btn-outline-primary"><%= link_to "Agregar admin", new_admin_register_path %></button>
+
+
+    <% if flash[:notice] %>
+    <div class="alert alert-success my-3">
+        <%= flash[:notice] %>
+    </div>
+    <% end %>
+
+    <table class="table table-striped my-5">
+        <thead class="thead-dark">
+            <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td><%= user.name %></td>
+                <td><%= user.surname %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+

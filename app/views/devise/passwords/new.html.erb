@@ -1,0 +1,41 @@
+<style>
+  .form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -5px;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+</style>
+
+<div class="d-flex align-items-center py-4 bg-body-tertiary">
+  <div class="form-signin w-100 m-auto"> 
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <!--<img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
+      <h3 class=" d-flex text-wrap mb-3 fw-normal fs-5 justify-content-center">¿Has olvidado tu contraseña?</h3>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-floating mb-3"> 
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"floatingInput", placeholder:"name@example.com" %>
+        <%= f.label :"Correo electronico", for:"floatingInput"%>
+      </div>
+
+      <div class="actions my-3">
+        <%= f.submit "Restablecer contraseña", class:"btn btn-primary w-100 py-2 my-2", data: { turbo: false } %>
+        <%= link_to "Cancelar", new_user_session_path, class:"btn btn-outline-danger w-100 py-2 my-2" %>
+      </div>
+      
+    <% end %>
+  </div>
+</div>
