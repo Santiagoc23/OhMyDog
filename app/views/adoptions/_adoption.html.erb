@@ -1,0 +1,44 @@
+<div id="<%= dom_id adoption %>">
+  <p>
+    <strong>Nombre:</strong>
+    <%= adoption.name&.presence || "Sin nombre" %>
+  </p>
+
+  <p>
+    <strong>Raza:</strong>
+    <%= adoption.race %>
+  </p>
+
+  <p>
+    <strong>Tamaño:</strong>
+    <%= adoption.size %>
+  </p>
+
+  <p>
+    <strong>Sexo:</strong>
+    <%= adoption.sex %>
+  </p>
+
+  <p>
+    <strong>Descripción:</strong>
+    <%= adoption.description %>
+  </p>
+
+  <p>
+    <strong>Situación:</strong>
+    <%= adoption.situation %>
+  </p>
+
+  <% if adoption.finished? %>
+    <strong>Adoptad@ el</strong>
+    <%= adoption.confirmed_at.strftime("%d-%m-%Y %H:%M") %>
+  <% else %>
+    <strong>Sigue sin hogar</strong>
+  <% end %>
+
+  <p>
+  <strong>Publicada el:</strong>
+  <%= adoption.created_at.strftime("%d-%m-%Y %H:%M") %>
+  </p>
+
+</div>

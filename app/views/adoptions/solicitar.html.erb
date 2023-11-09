@@ -1,0 +1,35 @@
+<h1>Solicitar adopcion via correo electronico </h1>
+
+Ingrese sus datos
+
+<%= form_with(method: :post) do |form| %>
+  <div>
+    <%= form.label :name, 'Nombre:', style: "display: block" %>
+    <%= form.text_field :name, value: @name %>
+  </div>
+
+  <div>
+    <%= form.label :lastname, 'Apellido:', style: "display: block" %>
+    <%= form.text_field :lastname, value: @lastname %>
+  </div>
+
+  <div>
+    <%= form.label :phone, 'Teléfono:', style: "display: block" %>
+    <%= form.text_field :phone, value: @phone %>
+  </div>
+
+  <div>
+    <%= form.label :mail, 'Correo Electrónico:', style: "display: block" %>
+    <%= form.text_field :mail, value: @mail %>
+  </div>
+
+  <div>
+    <%= form.submit 'Enviar' %>
+  </div>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Volver atras", adoptions_path %>
+</div>
