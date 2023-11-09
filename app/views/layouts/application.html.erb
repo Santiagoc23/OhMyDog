@@ -11,7 +11,87 @@
   </head>
 
   <body>
-  <%= render 'shared/header' %>
-    <%= yield %>
+    <header class="navbar sticky-top  bg-dark flex-md-nowrap p-2 shadow" data-bs-theme="dark">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+      <ul class="navbar-nav flex-row d-md-none">
+        <li class="nav-item text-nowrap">
+          <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+          </button>
+        </li>
+      </ul>
+    </header>
+
+    <div class="container-fluid" id="containerfullpantalla">
+      <div class="row ">
+        <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
+          <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
+            </div>
+            <nav class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 ">
+              <ul class="nav flex-column" id="sidebarNav" data-bs-spy="scroll" data-bs-target="#sidebarNav">              
+                <li class="nav-item">
+                  <%= link_to dashboard_home_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                      <i class="bi bi-house-fill"></i> Inicio
+                  <% end %>
+                </li>
+
+                <% if current_user && current_user.admin? %>
+                   <li class="nav-item">
+                    <%= link_to requests_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                        <i class="bi bi-calendar-plus"></i> Solicitud de turnos
+                    <% end %>
+                    <li class="nav-item">
+                    <%= link_to confirmed_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                        <i class="bi bi-calendar-check-fill"></i> Turnos confirmados
+                    <% end %>
+                  </li>
+                <% else %>
+                  <li class="nav-item">
+                    <%= link_to appointments_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                        <i class="bi bi-calendar"></i> Turnos
+                    <% end %>
+                  </li>
+                <% end %>
+                
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center gap-2 text-dark" href="#">
+                    <i class="bi bi-file-earmark"></i>
+                    Adopción
+                  </a>
+                </li>
+                <% if current_user && current_user.admin? %>
+                  <li class="nav-item">
+                  <%= link_to registers_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                      <i class="bi bi-people"></i> Clientes
+                  <% end %>
+                  </li>
+                  <li class="nav-item">
+                  <%= link_to admin_registers_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                      <i class="bi bi-person-gear"></i> Administradores
+                  <% end %>
+                  </li>
+                <% end %>
+              </ul>
+              <ul class="nav flex-column mt-auto">
+                <li class="nav-item">
+                  <%= link_to destroy_user_session_path, class:"nav-link d-flex align-items-center gap-2 text-dark",'data-turbo-method': :delete do %>
+                    <i class="bi bi-door-closed"></i> Log Out
+                  <% end %>
+                </li> 
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div>
+            <%= yield %>
+          </div>
+        </main>
+      </div>
+    </div>
   </body>
 </html>

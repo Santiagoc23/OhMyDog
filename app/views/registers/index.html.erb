@@ -1,0 +1,45 @@
+<style>
+    .max-width-500 {
+         max-width: 500px;
+        width: 100%;
+        margin-left: auto;
+         margin-right: auto;
+    }
+</style>
+
+<div class="container-fluid py-3">
+    <h2>Clientes</h2>
+    <button class="btn btn-secondary rounded-pill px-3"><%= link_to "Agregar", new_register_path, class:"text-white text-decoration-none"%></button>
+
+
+    <% if flash[:notice] %>
+    <div class="alert alert-success my-3 max-width-500">
+        <%= flash[:notice] %>
+    </div>
+    <% end %>
+
+    <table class="table table-striped my-5">
+    <thead class="thead-dark">
+        <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+        <th>DNI</th>
+        <th>Telefono</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @users.each do |user| %>
+        <tr>
+            <td><%= user.name %></td>
+            <td><%= user.surname %></td>
+            <td><%= user.email %></td>
+            <td><%= user.dni %></td>
+            <td><%= user.phoneNum %></td>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+</div>
+
+

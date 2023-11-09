@@ -1,0 +1,25 @@
+<div class="modal modal-sheet position-static d-block p-3 py-md-4" tabindex="-1" role="dialog" id="modalTour">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-5">
+        <h2 class="fw-bold mb-0 fs-3 text-center">ACCIONES PARA EL TURNO</h2>
+        <div class="text-center my-3">
+          <%= render @appointment %>
+        </div>
+        
+        <div class="row g-3 text-center pb-2">   
+          <div class="col-12">
+            <%= link_to "Reprogramar solicitud", edit_appointment_path(@appointment, source: "confirmed"), class: "btn btn-primary w-100"%>
+          </div>
+          <div class="col-12">
+              <%= link_to "Cancelar turno", confirm_cancel_appointment_path(@appointment, source: "cancel_from_confirmed"), class: "btn btn-danger w-100" %> 
+          </div>
+          <div class="col-12"> 
+            <%= link_to "Volver atras", confirmed_path, class: "btn btn-outline-secondary w-100 "%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
