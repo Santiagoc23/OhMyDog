@@ -1,19 +1,17 @@
-<%= form_with(model: appointment) do |form| %>
-  
-  <h1>Confirmar Cancelación</h1>
-    <p>¿Estás seguro de que deseas cancelar este turno?</p>
-
-    <p>
-    <strong>Horario:</strong>
-    <%= @appointment.time.strftime("%d-%m-%Y %H:%M") %>
-    </p>
-
-    <div>
-    <%= form.label :message, style: "display: block" %>
-    <%= form.text_area :message %>
-    </div>
+<div class="card-body" id="<%= dom_id appointment %>">
+  <%= form_with(model: appointment) do |form| %>
     
-    <%= form.hidden_field :source, value: @from %>
-    <%= form.submit %>
-  </div>
-<% end %>
+      <div class="modal-header border-bottom-0">
+        <h3 class="modal-title fs-5 ">Confirmar cancelación</h3>
+      </div>
+      <div class="modal-body py-0">
+        <p>¿Estás seguro de que deseas cancelar este turno?
+        <br><strong> Fecha y horario: </strong><%= @appointment.time.strftime("%d/%m/%Y %H:%M") %> hs.</p>
+      </div>
+      
+      <div class="modal-footer flex-column align-items-stretch w-100  pb-3 border-top-0">
+        <%= form.label :Motivo%>
+        <%= form.text_area :message, class:"form-control", id:"exampleFormControlTextarea1", rows:"3", maxlength:"200"%>
+        <%= form.hidden_field :source, value: @from %>
+        <%= form.submit "Cancelar turno", class: "btn btn-lg btn-danger"%>
+  <% end %>

@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :appointments
 
   validates :dni, presence: true, uniqueness: true,
     length: { is: 8 },

@@ -1,13 +1,13 @@
-<h1>Nuevo turno</h1>
+<div class="container-fluid mt-4 px-2">
+  <h2>Nuevo turno</h2>
+  <hr>
 
-<%= render "form", appointment: @appointment %>
-
-<br>
-
-<div class="atencion-message">
-  <p>Tenga en cuenta que rabajamos de Lunes a Sabados de 9 a 13, y de 14 a 18 horas. Gracias! </p>
-</div>
-
-<div>
-  <%= link_to "Volver atras", appointments_path %>
+  <div class="modal modal-sheet position-static d-block p-4 py-md-2" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <%= render "form", appointment: @appointment %>
+        <%= link_to "Volver atras", appointments_path, class:"btn btn-lg btn-secondary" %>  
+      </div>
+    </div>
+  </div>
 </div>

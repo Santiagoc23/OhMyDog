@@ -1,25 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<div class="modal modal-sheet position-static d-block p-3 py-md-4" tabindex="-1" role="dialog" id="modalTour">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-5">
+        <h2 class="fw-bold mb-0 fs-3 text-center">ACCIONES PARA EL TURNO</h2>
+        <div class="text-center my-3">
+          <%= render @appointment %>
+        </div>
+        <div class="row g-3 text-center pb-2">
+          <!-- SI ESTA REPROG POR LA VT MUESTRA PARA CONFIRMAR-->
+          <% if @appointment.state == 3 %>
+            <%= form_with(model: @appointment, url: confirm_admin_edit_path(@appointment), method: :patch, local: true) do |form| %>
+              <%= form.hidden_field :state, value: 1 %>
+              <%= form.submit "Confirmar reprogramación", class: "btn btn-primary w-100"%> 
+            <% end %>
+          <% end %> 
 
-<%= render @appointment %>
-
-<div>
-  <!-- SI NO ESTA CANCELADO MUESTRA PARA EDITAR Y UN ELIMINAR CON CONFIRMACION-->
-  <% if @appointment.state != 4 %>
-    <%= link_to "Editar turno", edit_appointment_path(@appointment, source: "user") %> 
-    <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment) %>|
-  <% end %>
-  <%= link_to "Volver atras", appointments_path %>
-
-  <!-- SI ESTA REPROG POR LA VT MUESTRA PARA CONFIRMAR-->
-  <% if @appointment.state == 3 %>
-    <%= form_with(model: @appointment, url: confirm_admin_edit_path(@appointment), method: :patch, local: true) do |form| %>
-      <%= form.hidden_field :state, value: 1 %> 
-      <%= form.submit "Confirmar reprogramación" %>
-    <% end %>
-  <% end %>
-
-  <!-- SI ESTA CANCELADO POR LA VT MUESTRA PARA BORRAR DE UNA-->
-  <% if @appointment.state == 4%>
-    <%= button_to "Eliminar turno", @appointment, method: :delete %>
-  <% end %>
+          <!-- SI NO ESTA CANCELADO MUESTRA PARA EDITAR Y UN ELIMINAR CON CONFIRMACION-->
+          <% if @appointment.state != 4 %>
+            <div class="col-12">
+              <%= link_to "Reprogramar turno", edit_appointment_path(@appointment, source: "user"), class: "btn btn-primary w-100"%>
+            </div>
+            <div class="col-12">
+              <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment), class: "btn btn-danger w-100" %> 
+            </div>
+          <% end %> 
+          
+          <!-- SI ESTA CANCELADO POR LA VT MUESTRA PARA BORRAR DE UNA-->
+          <% if @appointment.state == 4%>
+            <%= link_to "Eliminar turno", @appointment, method: :delete, class: "btn btn-danger w-100" %> 
+          <% end %>
+          <div class="col-12"> 
+            <%= link_to "Volver atras", appointments_path, class: "btn btn-outline-secondary w-100 "%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

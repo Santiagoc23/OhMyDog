@@ -1,13 +1,21 @@
-<h1>Editando turno</h1>
+<div class="container-fluid mt-4 px-2">
+  <h2>Reprogramar turno</h2>
+  <hr>
 
-<%= render "form", appointment: @appointment, from: @source %>
-
-<div>
-  <% if params[:source] == "confirmed" %>
-    <%= link_to "Volver atras", confirmed_path %>
-  <% elsif params[:source] == "request" %>
-    <%= link_to "Volver atras", requests_path %>
-  <% elsif params[:source] == "user" %>
-    <%= link_to "Volver atras", @appointment %> |
-  <% end %>  
+  <div class="modal modal-sheet position-static d-block p-4 py-md-2" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <%= render "form", appointment: @appointment, from: @source %>
+      
+        <% if params[:source] == "confirmed" %>
+          <%= link_to "Volver atras", confirmed_path, class:"btn btn-lg btn-secondary" %>
+        <% elsif params[:source] == "request" %>
+          <%= link_to "Volver atras", requests_path, class:"btn btn-lg btn-secondary" %>
+        <% elsif params[:source] == "user" %>
+          <%= link_to "Volver atras", @appointment, class:"btn btn-lg btn-secondary" %> 
+        <% end %>
+        </div>   
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,22 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid mt-4 px-2">
+  <h2>Solicitudes de turnos</h2>
+  <hr>
 
-<h1>Solicitudes de turnos</h1>
-
-<% if flash[:alert].present? %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-
-<div id="appointments">
-  <% @appointments.each do |appointment| %>
-    <% if appointment.state != 1 && appointment.state !=4 %> <!-- muestra todos menos los confirmados y cancelados -->
-      <%= render appointment %>
-      <p>
-      <%= link_to "Seleccionar turno", request_path(appointment) %>
-      </p>
-    <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
   <% end %>
+
+  <div class="my-3" id="appointments">
+    <div class="row">
+      <% @appointments.each do |appointment| %>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <%= render appointment %>
+            <div class = card-body>
+              <button class="btn btn-secondary d-inline-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#show_request"><%= link_to "VER MAS  ", request_path(appointment), class:"text-white text-decoration-none pe-2"%><i class="bi bi-plus-circle align-items-center mx-1"></i></button>
+            </div>
+          </div>
+        </div>    
+      <% end %>
+    </div>
+  </div>
+
 </div>
-
-

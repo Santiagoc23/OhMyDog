@@ -9,8 +9,7 @@ class ApplicationController < ActionController::Base
 
     private 
     def authenticate_admin
-        unless current_user && current_user.admin?
-            flash[:alert] = "Acceso denegado - Solo los administradores pueden realizar esta acción."
+        unless current_user.admin?
             redirect_to dashboard_home_path
         end
     end

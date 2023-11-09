@@ -1,23 +1,23 @@
-<%= form_with(model: appointment) do |form| %>
-  <% if appointment.errors.any? %>
-    <div style="color: red">
-      <h2> Tu turno tiene <%= appointment.errors.count %> error/es:</h2>
-
-      <ul>
-        <% appointment.errors.each do |error| %>
-          <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
-        <% end %>
-      </ul>
-    </div>
+<div class="card-body" id="<%= dom_id appointment %>">
+  <%= form_with(model: appointment) do |form| %>
+    
+      <div class="modal-header border-bottom-0">
+        <h3 class="modal-title fs-5">Eleccion de fecha y hora:</h3>
+      </div>
+      <div class="modal-body py-0">
+        <p>Franja horario valida de lunes a sabados<br>Horario: <span class="fw-bold">09:00 a 13:00 | 14:00 a 18:00</span><br></p>
+      </div>
+      <% if appointment.errors.any? %>
+        <div class="alert alert-danger flex-column align-items-stretch w-100" role="alert">
+          <ul>
+            <% appointment.errors.each do |error| %>
+              <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="modal-footer flex-column align-items-stretch w-100  pb-3 border-top-0">
+        <%= form.datetime_field :time, class: "form-control form-control-inline" %>
+        <%= form.hidden_field :source, value: @from %>
+        <%= form.submit "Programar turno", class: "btn btn-lg btn-primary"%>
   <% end %>
-
-  <div>
-    <%= form.label :time, style: "display: block" %>
-    <%= form.datetime_field :time%>
-  </div>
-
-  <div>
-    <%= form.hidden_field :source, value: @from %>
-    <%= form.submit %>
-  </div>
-<% end %>
