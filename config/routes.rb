@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   resources :registers, only: [:index, :new, :create]
   resources :admin_registers, only: [:index, :new, :create]
   get 'dashboard/home'
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
 
   patch 'appointments/:id/confirm_admin_edit', to: 'appointments#confirm_admin_edit', as: 'confirm_admin_edit'
 
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/:id/confirm_cancel', to: 'appointments#confirm_cancel', as: :confirm_cancel_appointment
   get '/:id/edit', to: 'appointments#edit', as: :edit__appointment
@@ -38,5 +38,16 @@ Rails.application.routes.draw do
 
   get '/confirmed', to: 'appointments#index_confirmed', as: :confirmed
   get '/confirmed/:id', to: 'appointments#show_confirmed', as: :confirmed_show
+
+
+  resources :adoptions do
+    member do
+      patch 'confirm'
+    end
+  end
+
+  post 'adoption/:id/request', to: 'adoptions#solicitar'
+  get 'adoption/:id/request', to: 'adoptions#solicitar', as: :solicitar
+
 
 end

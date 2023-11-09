@@ -67,7 +67,22 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+  # Configuracion de mails
 
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Configuracion de Gmail
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => "vete0hmydog@gmail.com",
+    :password => "atel klwo cegi ryza", #Aca hay un problema y es que no pueden usar la contraseña directamente, 
+         # tienen que activar verificación en dos pasos, entrar ahi y abajo del todo le aparece una cosa que se llama contraseña para aplicaciones, generan una y la pegan aca
+    :authentication => :plain,
+    :enable_starttls_auto =>true
+}
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

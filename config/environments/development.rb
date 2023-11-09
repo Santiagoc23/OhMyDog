@@ -68,6 +68,24 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  # Device configuration
+
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+  # Configuracion de mails
+
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Configuracion de Gmail
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => "vete0hmydog@gmail.com",
+    :password => "atel klwo cegi ryza", #Aca hay un problema y es que no pueden usar la contraseña directamente, 
+         # tienen que activar verificación en dos pasos, entrar ahi y abajo del todo le aparece una cosa que se llama contraseña para aplicaciones, generan una y la pegan aca
+    :authentication => :plain,
+    :enable_starttls_auto =>true
+  }
+
 end

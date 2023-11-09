@@ -1,0 +1,32 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @adoption %>
+
+<!-- PARA AGREGAR LOS IF QUE FALTAN SERÁ NECESARIO TENER UNA FORMA DE OBTENER QUIEN ES EL USUARIO QUE ESTA USANDO LA APLICACION
+Y DETECTAR SI ES ADMINISTRADOR-->
+
+<div>
+  <% if !@adoption.finished %> <!-- AGREGAR AL IF QUE SE LE MUESTRE SOLO AL USUARIO QUE LO CREO -->
+  <%= link_to '<button type="button" class="btn btn-warning">Editar publicación</button>'.html_safe, edit_adoption_path(@adoption) %>
+ 
+  <% end %>
+  <%= link_to '<button type="button" class="btn btn-info">Volver atrás</button>'.html_safe, adoptions_path %>
+
+  <% if !@adoption.finished %> <!-- AGREGAR AL IF QUE NO SE LE MUESTRE AL DUEÑO -->
+  <%= link_to '<button type="button" class="btn btn-success">Adoptar</button>'.html_safe, solicitar_path(@adoption) %>
+
+  <% end %>
+
+  <% if !@adoption.finished %> <!-- A ESTE IF HAY QUE AGREGARLE QUE SOLO SE MUESTRA SI NO ES ADMIN Y NO ES EL QUE PUBLICO EL PERRO -->
+    <%= form_with(model: @adoption, url: confirm_adoption_path(@adoption), method: :patch) do |form| %>
+      <%= form.hidden_field :finished, value: true %>
+      <%= form.hidden_field :confirmed_at, value: Time.current %>
+      <%= form.submit "Confirmar Adopción" %> 
+    <% end %>
+  <% end %>
+  
+  <% if !@adoption.finished %> <!-- AGREGAR AL IF QUE SE LE VEA SOLO AL DUEÑO Y AL ADMIN -->
+    <%= link_to '<button type="button" class="btn btn-danger">Eliminar publicación</button>'.html_safe, @adoption, method: :delete %>
+
+  <% end %>
+</div>

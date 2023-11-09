@@ -1,0 +1,27 @@
+
+<div class="row row-cols-3 row-cols-md-10 g-9">
+
+<div class="container text-center">
+<h2>Perritos en adopción:</h2>
+
+<div class="row gx-10">
+<div class="row col-15">
+  <% @adoptions.each do |adoption| %>
+    <div class="col-10">
+   <div class="card text-bg-info mb-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title"> <%= adoption.name %> </h5>
+      <p class="card-text">Raza: <%= adoption.race %> </p>
+      <p class="card-text">Tamaño: <%= adoption.size %></p>
+      <p class="card-text">Sexo: <%= adoption.sex %></p>
+      <p class="card-text">Descripción: <%= adoption.description %> </p>
+      <p class="card-text">Situación: <%= adoption.situation %> </p>
+      <%= link_to '<button type="button" class="btn btn-light">Adoptar</button>'.html_safe, adoption %>
+    </div>
+   </div>
+ </div>
+  <% end %>
+</div>
+</div>
+
+<%= link_to '<button type="button" class="btn btn-primary">Publicar perrito en adopción</button>'.html_safe, new_adoption_path %>
