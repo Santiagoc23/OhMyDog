@@ -8,12 +8,10 @@ class User < ApplicationRecord
   has_many :appointments
   has_many :adoptions
   
-  validates :dni, presence: true, uniqueness: true,
-    length: { is: 8 },
-    format: {
-      with: /\A[0-9]+\z/,
-      message: :invalid
-    }
+  validates :dni, presence: true, uniqueness: true, 
+  length: { in: 7..8 }, format: { with: /\A\d+\z/, message: "debe contener solo números" }
+  
+  validates :phoneNum, presence: true, format: { with: /\A\d+\z/, message: "Solo puede contener digitos" }
   
   
   enum role: [:user, :admin]

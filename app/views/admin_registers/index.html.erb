@@ -1,12 +1,17 @@
 <div class="container-fluid py-3">
     <h2>Administardores</h2>
-    <button class="btn btn-outline-primary"><%= link_to "Agregar admin", new_admin_register_path %></button>
+    <hr>
+    <%= link_to "Agregar admin", new_admin_register_path, class:"btn btn-secondary px-3 mb-2" %>
 
 
-    <% if flash[:notice] %>
-    <div class="alert alert-success my-3">
+    <% if flash[:alert].present? %>
+        <div class="alert alert-danger">  
+        <%= flash[:alert] %>
+        </div>
+    <% elsif flash[:notice].present? %>
+        <div class="alert alert-success">  
         <%= flash[:notice] %>
-    </div>
+        </div>
     <% end %>
 
     <table class="table table-striped my-5">

@@ -1,2 +1,19 @@
-<h1>Dashboard#home</h1>
-<p>Find me in app/views/dashboard/home.html.erb</p>
+<div class="container-fluid mt-4 px-2">
+    <% if current_user %>
+        <h1>Bienvenido <%= current_user.surname%> <%=current_user.name%></h1>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+        <div class="alert alert-danger mt-4">  
+            <%= flash[:alert] %>
+        </div>
+    <% elsif flash[:notice].present? %>
+        <div class="alert alert-success">  
+            <%= flash[:notice] %>
+        </div>
+    <% end %>
+
+    <div class="alert alert-warning w-50 text-center" role="alert">
+    ¡PROXIMAS FUNCIONES EN DESARROLLO!
+    </div>
+</div>

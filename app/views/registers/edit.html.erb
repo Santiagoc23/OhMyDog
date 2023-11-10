@@ -19,7 +19,7 @@
 }
 </style>
 
-<div class="d-flex align-items-center py-4 bg-body-tertiary">
+<div class="d-flex align-items-center py-4  ">
   <div class="form-signin w-100 m-auto py-5"> 
     <%= form_for @user, url: update_user_registration_path(@user), method: :patch do |f| %>
       <h3 class=" d-flex text-wrap mb-3 fw-normal fs-5 justify-content-center">Elige tu contraseña</h3>
@@ -36,12 +36,12 @@
       </div>   
 
        <% if flash[:alert] %>
-        <div class="alert alert-danger my-2 p-1 max-width-500">
+        <div class="alert alert-danger my-2 p-2 max-width-500 text-center">
           <%= flash[:alert] %>
         </div>
       <% end %>   
 
-      <div class="actions my-2">
+      <div class="actions mb-2">
         <%= f.submit "Cambiar contraseña", class:"btn btn-primary w-100 py-2 my-2", data: { turbo: false } %>
       </div>
     <% end %>

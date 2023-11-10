@@ -1,44 +1,13 @@
-<div id="<%= dom_id adoption %>">
-  <p>
-    <strong>Nombre:</strong>
-    <%= adoption.name&.presence || "Sin nombre" %>
-  </p>
-
-  <p>
-    <strong>Raza:</strong>
-    <%= adoption.race %>
-  </p>
-
-  <p>
-    <strong>Tamaño:</strong>
-    <%= adoption.size %>
-  </p>
-
-  <p>
-    <strong>Sexo:</strong>
-    <%= adoption.sex %>
-  </p>
-
-  <p>
-    <strong>Descripción:</strong>
-    <%= adoption.description %>
-  </p>
-
-  <p>
-    <strong>Situación:</strong>
-    <%= adoption.situation %>
-  </p>
-
+<div class="card-body">
+  <h5 class="card-title mb-2"><%= adoption.name&.presence || "Sin nombre" %></h5>
+  <p class="card-text"><strong>Raza: </strong><%= adoption.race %></p>   
+  <p class="card-text"><strong>Tamaño: </strong><%= adoption.size %></p>
+  <p class="card-text"><strong>Sexo: </strong><%= adoption.sex %></p>
+  <p class="card-text"><strong>Descripción: </strong><%= adoption.description %> </p>
+  <p class="card-text"><strong>Fecha de publicación: </strong><%= adoption.created_at.strftime("%d/%m/%Y | %H:%M") %></p>
   <% if adoption.finished? %>
-    <strong>Adoptad@ el</strong>
-    <%= adoption.confirmed_at.strftime("%d-%m-%Y %H:%M") %>
+    <p class="card-text"><strong>ADOPTADA - Fecha de adopción: </strong><%= adoption.confirmed_at.strftime("%d/%m/%Y | %H:%M") %></p>
   <% else %>
-    <strong>Sigue sin hogar</strong>
+    <p class="card-text"><strong>Estado de adopcion: </strong>En espera de adopción.</p>
   <% end %>
-
-  <p>
-  <strong>Publicada el:</strong>
-  <%= adoption.created_at.strftime("%d-%m-%Y %H:%M") %>
-  </p>
-
 </div>

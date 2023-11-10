@@ -1,51 +1,61 @@
-<%= form_with(model: adoption) do |form| %>
-  <% if adoption.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(adoption.errors.count, "error") %> prohibited this adoption from being saved:</h2>
+<div class=""> 
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Datos del perro</h4>
+        <%= form_with(model: adoption) do |f| %>
+          <div class="row g-3">
+            <div class="col-sm-6">
+               <%= f.label :Nombre, class:"form-label" %>
+               <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:"", value:"", required: "required"%>
+            </div>
 
-      <ul>
-        <% adoption.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+            <div class="col-sm-6">
+               <%= f.label :Raza, class:"form-label" %>
+               <%= f.text_field :race, autofocus: true, autocomplete: "race", class:"form-control", placeholder:"", value:"", required: "required"%>
+            </div>
+              
+            <div class="col-12">
+               <%= f.label :Tamaño, class:"form-label" %>
+               <%= f.text_field :size, autofocus: true, autocomplete: "size", class:"form-control", placeholder:"", value:"", required: "required"%>
+            </div>
+            
+            <div class="col-12">
+              <%= f.label :Sexo, class:"form-label" %>
+              <%= f.text_field :sex, autofocus: true, autocomplete: "sex", class:"form-control", placeholder:"", value:"", required: "required"%>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :'Descripción (Personalidad, apariencia)', class:"form-label" %>
+              <%= f.text_area :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"", value:"", required: "required"%>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :Situación, class:"form-label" %>
+              <%= f.text_area :situation, autofocus: true, autocomplete: "situation", class:"form-control", placeholder:""  %>
+            </div>
+          </div>
+
+          <% if flash[:alert] %>
+            <div class="alert alert-danger my-2 p-1 text-center">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>   
+
+          <% if adoption.errors.any? %>
+            <div class="alert alert-danger my-2 p-1 text-center">
+              <ul>
+                <% adoption.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <hr class="mt-4">
+          <%= f.submit "Publicar adopción", class:"w-100 btn btn-primary btn-lg" %>
         <% end %>
-      </ul>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
   </div>
-
-  <div>
-    <%= form.label :race, style: "display: block" %>
-    <%= form.text_field :race %>
-  </div>
-
-  <div>
-    <%= form.label :size, style: "display: block" %>
-    <%= form.text_field :size %>
-  </div>
-
-  <div>
-    <%= form.label :sex, style: "display: block" %>
-    <%= form.text_field :sex %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :situation, style: "display: block" %>
-    <%= form.text_area :situation %>
-  </div>
-
-  <div>
-  <%= form.hidden_field :user_id, value: 1 %> <!-- ACA HAY QUE INGRESAR EL ID DEL USUARIO ACTUAL -->
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

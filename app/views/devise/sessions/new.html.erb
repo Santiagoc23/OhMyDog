@@ -1,61 +1,25 @@
-<style>
-  .form-signin {
-  max-width: 330px;
-  padding: 1rem;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-</style>
-<!-- Outer Row -->
-<div class="row justify-content-center">
-           <div class="col-xl-10 col-lg-12 col-md-9">
-            <div class="card o-hidden border-0 shadow-lg my-5">
-               <div class="card-body p-0">
-                <div class="row">
-
-<div class="d-flex align-items-center py-4 bg-body-tertiary">
-  <div class="form-signin w-100 m-auto">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <!--<img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
-      <h2 class="h3 mb-3 fw-normal">Inicio sesión</h2>
-
-      <div class="form-floating">  
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"floatingInput", placeholder:"name@example.com" %>
-        <%= f.label :"Correo electronico", for:"floatingInput"%>
-      </div>
-      <div class="form-floating">
-        <%= f.password_field :password, autocomplete: "current-password", class:"form-control", id:"floatingPassword", placeholder:"Password" %>
-        <%= f.label :contraseña, for:"floatingPassword" %>
-      </div>
+<main class="form-signin w-100 m-auto">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <h2 class="h3 mb-3 fw-normal">Iniciar sesión</h2>
     
-      <div class="text-center">
+    <div class="form-floating">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"floatingInput", placeholder:"name@example.com" %>
+      <%= f.label :"Correo electronico", for:"floatingInput"%>
+    </div>
+    <div class="form-floating">
+      <%= f.password_field :password, autocomplete: "current-password", class:"form-control", id:"floatingPassword", placeholder:"Password" %>
+      <%= f.label :contraseña, for:"floatingPassword" %>
+    </div>
+
+    <div class="text-center my-3">
         <% if alert %>
           <p class="alert alert-danger p-1"><%= alert %></p>
         <% end %>
-      </div>
-        
-      <div class="actions my-2">
-        <%= f.submit "Iniciar Sesion", class:"btn btn-primary w-100 my-2 py-2", data: { turbo: false } %>
-      </div>
-    <% end %>
-  </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+    </div>
+
+
+     <%= f.submit "Iniciar Sesion", class:"btn btn-primary w-100 my-2 py-2", data: { turbo: false } %>
+
+  <% end %>
+</main>
+</body>

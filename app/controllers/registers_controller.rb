@@ -17,8 +17,16 @@ class RegistersController < ApplicationController
             flash[:notice] = 'Usuario registrado exitosamente.'
             redirect_to registers_path
         else
-            flash[:alert] = 'Algun datos ya están vinculados a una cuenta de la aplicación existente.'
-            render :new
+            if @user.errors[:email].any?
+                flash[:alert] = 'El email ya está vinculado a una cuenta existente o no respeta el formato correpondiente.'
+            elsif @user.errors[:dni].any?
+                flash[:alert] = 'El DNI ya está vinculado a una cuenta existente o no respeta el formato correpondiente.'
+            elsif @user.errors[:phoneNum].any?
+                flash[:alert] = 'El numero de telefono no respeta el formato correpondiente.'
+            else
+                flash[:alert] = 'Hubo un problema al registrar el usuario.'
+            end
+            render :new, status: :unprocessable_entity
         end
     end
 
@@ -42,7 +50,7 @@ class RegistersController < ApplicationController
             # La contraseña se actualiza correctamente
             flash[:alert] = 'La contraseñas no coincide.'
             # La actualización falla, mostrar errores
-            render :edit
+            render :edit, status: :unprocessable_entity 
         end
     end
 

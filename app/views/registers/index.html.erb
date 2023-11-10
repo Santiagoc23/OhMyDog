@@ -9,13 +9,15 @@
 
 <div class="container-fluid py-3">
     <h2>Clientes</h2>
-    <button class="btn btn-secondary rounded-pill px-3"><%= link_to "Agregar", new_register_path, class:"text-white text-decoration-none"%></button>
+    <hr>
+    <%= link_to "Agregar cliente", new_register_path, class:"btn btn-secondary px-3 mb-2"%>
 
 
-    <% if flash[:notice] %>
-    <div class="alert alert-success my-3 max-width-500">
+
+    <% if flash[:notice].present? %>
+        <div class="alert alert-success">  
         <%= flash[:notice] %>
-    </div>
+        </div>
     <% end %>
 
     <table class="table table-striped my-5">

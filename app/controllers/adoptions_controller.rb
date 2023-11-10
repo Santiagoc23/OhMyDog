@@ -1,8 +1,10 @@
 class AdoptionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show, :solicitar]
+  before_action :require_owner_or_admin, only: [:edit, :update, :confirm, :destroy  ]
   before_action :set_adoption, only: %i[ show edit update destroy ]
 
   # GET /adoptions or /adoptions.json
-  def index
+  def index   
     @adoptions = Adoption.order(created_at: :desc) # MAS RECIENTE AL MAS VIEJO
     @finished_adoptions = @adoptions.select { |adoption| adoption.finished? }
 
@@ -34,12 +36,13 @@ class AdoptionsController < ApplicationController
 
   # GET /adoptions/1/edit
   def edit
+    
   end
 
   # POST /adoptions or /adoptions.json
   def create
     @adoption = Adoption.new(adoption_params)
-
+    @adoption.user_id = current_user.id 
     respond_to do |format|
       if @adoption.save
         format.html { redirect_to adoption_url(@adoption), notice: "Adoption was successfully created." }
@@ -77,31 +80,30 @@ class AdoptionsController < ApplicationController
   def solicitar
     @adoption = Adoption.find(params[:id])
 
+    if user_signed_in?
+      user = User.find(current_user.id)
+      @name = user.name
+      @lastname = user.surname
+      @phone = user.phoneNum
+      @mail = user.email
+    else
+      @name = ""
+      @lastname = ""
+      @phone = ""
+      @mail = ""
+    end
 
-    #NOTA IMPORTANTE, ACA HAY QUE CAMBIAR 2, QUE ES DE PRUEBA, POR EL ID DEL USUARIO ACTUAL, TAMBIEN TIENE QUE DETECTAR SI
-    #NO ESTÁ REGISTRADO Y NO HACER EL FIND, EN SU LUGAR PONER LOS CAMPOS NAME, LASTNAME, PHONE Y MAIL VACIOS
-
-    user = User.find(2)
-
-    #ELEGÍ EVITAR VERIFICAR SI EL CORREO O EL TELEFONO SON UNICOS, ESTO PUEDE FILTRAR INFORMACION SOBRE QUIEN USA LA APLICACION
-    #Y NO TENDRIA NINGUN OBJETIVO ESPECIAL
-
-
-    @name = user.name
-    @lastname = user.lastname
-    @phone = user.phone
-    @mail = user.mail
     if request.post?
       modified_name = params[:name]
       modified_lastname = params[:lastname]
       modified_phone = params[:phone]
       modified_mail = params[:mail]
       dogname= @adoption.name
-      dogmail= User.find(@adoption.user_id).mail
+      dogmail= User.find(@adoption.user_id).email
       omd_notifications_mail= "vete0hmydog@gmail.com" #PREGUNTAR SI TIENEN ALGUNO
 
-      UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, dogmail).deliver_now
-      UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, omd_notifications_mail).deliver_now
+      UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, dogmail).deliver_later
+      UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, omd_notifications_mail).deliver_later
 
       mensaje= 'Adopción solicitada exitosamente, espere el contacto!'
       redirect_to adoptions_path, notice: mensaje
@@ -118,6 +120,14 @@ class AdoptionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def adoption_params
       params.require(:adoption).permit(:name, :race, :size, :sex, :description, :situation, :user_id, :finished, :confirmed_at)
+    end
+
+    def require_owner_or_admin
+      @adoption = Adoption.find(params[:id])
+      # Verifica si el usuario es el propietario del recurso o es un administrador
+      unless current_user && (current_user.id == @adoption.user_id || current_user.admin?)
+        redirect_to dashboard_home_path
+      end
     end
 
 end

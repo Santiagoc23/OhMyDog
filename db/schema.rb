@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_044728) do
     t.datetime "confirmed_at", precision: nil
     t.index ["user_id"], name: "index_adoptions_on_user_id"
   end
-  
+
   create_table "appointments", force: :cascade do |t|
     t.datetime "time"
     t.integer "state", default: 0
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_044728) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
   add_foreign_key "adoptions", "users"
   add_foreign_key "appointments", "users"
-
 end
