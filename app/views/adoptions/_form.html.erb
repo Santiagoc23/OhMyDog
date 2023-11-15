@@ -7,32 +7,38 @@
           <div class="row g-3">
             <div class="col-sm-6">
                <%= f.label :Nombre, class:"form-label" %>
-               <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:"", value:"", required: "required"%>
+               <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:""%>
+               <span class="text-muted">(puedes dejarlo en blanco si no tiene)</span>
             </div>
 
             <div class="col-sm-6">
                <%= f.label :Raza, class:"form-label" %>
-               <%= f.text_field :race, autofocus: true, autocomplete: "race", class:"form-control", placeholder:"", value:"", required: "required"%>
+               <%= f.text_field :race, autofocus: true, autocomplete: "race", class:"form-control", placeholder:"", required: "required"%>
             </div>
               
             <div class="col-12">
                <%= f.label :Tamaño, class:"form-label" %>
-               <%= f.text_field :size, autofocus: true, autocomplete: "size", class:"form-control", placeholder:"", value:"", required: "required"%>
+               <%= f.select :size, ['Muy chico','Chico','Mediano','Grande','Muy grande'], { prompt: 'Selecciona el tamaño' }, { class: 'form-control', required: 'required', placeholder:""} %>
             </div>
             
             <div class="col-12">
-              <%= f.label :Sexo, class:"form-label" %>
-              <%= f.text_field :sex, autofocus: true, autocomplete: "sex", class:"form-control", placeholder:"", value:"", required: "required"%>
+              <%= f.label :Sexo, class: "form-label" %>
+              <%= f.select :sex, ['Hembra', 'Macho'], { prompt: 'Selecciona el sexo' }, { class: 'form-control', required: 'required', placeholder:""} %>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :Edad, class: "form-label" %>
+              <%= f.select :age, ['Cachorro (0-1 años)', 'Joven (1-3 años)', 'Adulto (3-6 años)', 'Senior (6-10 años)', 'Anciano (+10 años)'], { prompt: 'Selecciona edad aproximada' }, { class: 'form-control', required: 'required', placeholder:"" } %>
             </div>
 
             <div class="col-12">
               <%= f.label :'Descripción (Personalidad, apariencia)', class:"form-label" %>
-              <%= f.text_area :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"", value:"", required: "required"%>
+              <%= f.text_area :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"", required: "required"%>
             </div>
 
             <div class="col-12">
               <%= f.label :Situación, class:"form-label" %>
-              <%= f.text_area :situation, autofocus: true, autocomplete: "situation", class:"form-control", placeholder:""  %>
+              <%= f.text_area :situation, autofocus: true, autocomplete: "situation", class:"form-control", placeholder:"", required: "required"  %>
             </div>
           </div>
 

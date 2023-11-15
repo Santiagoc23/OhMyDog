@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_044728) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_13_223732) do
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
     t.string "race"
@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_044728) do
     t.datetime "updated_at", null: false
     t.boolean "finished"
     t.datetime "confirmed_at", precision: nil
+    t.string "age"
     t.index ["user_id"], name: "index_adoptions_on_user_id"
   end
 

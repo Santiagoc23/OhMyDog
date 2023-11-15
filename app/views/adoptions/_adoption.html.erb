@@ -1,9 +1,11 @@
 <div class="card-body">
   <h5 class="card-title mb-2"><%= adoption.name&.presence || "Sin nombre" %></h5>
   <p class="card-text"><strong>Raza: </strong><%= adoption.race %></p>   
+  <p  class="card-text"><strong>Sexo: </strong><%= adoption.sex %></p>
+  <p class="card-text"><strong>Edad: </strong><%= adoption.age %></p>
   <p class="card-text"><strong>Tamaño: </strong><%= adoption.size %></p>
-  <p class="card-text"><strong>Sexo: </strong><%= adoption.sex %></p>
   <p class="card-text"><strong>Descripción: </strong><%= adoption.description %> </p>
+  <p class="card-text"><strong>Situación: </strong><%= adoption.situation %> </p>   
   <p class="card-text"><strong>Fecha de publicación: </strong><%= adoption.created_at.strftime("%d/%m/%Y | %H:%M") %></p>
   <% if adoption.finished? %>
     <p class="card-text"><strong>ADOPTADA - Fecha de adopción: </strong><%= adoption.confirmed_at.strftime("%d/%m/%Y | %H:%M") %></p>

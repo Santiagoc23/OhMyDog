@@ -58,7 +58,7 @@ class AppointmentsController < ApplicationController
     else
       redirect_to dashboard_home_path
     end
-    
+
   end
 
   def show_confirmed
@@ -120,7 +120,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments or /appointments.json
   def create
     @appointment = Appointment.new(appointment_params)
-    @appointment.user_id = current_user.id 
+    @appointment.user_id = current_user.id
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to appointment_url(@appointment), notice: "Solicitud de turno enviada, espere la confirmacion desde la veterinaria." }
@@ -135,63 +135,56 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
     respond_to do |format|
-      ant= @appointment.state
-
-      if params[:appointment][:source] == "request" #el admin quiere actualizar
-        @appointment.state= 3
+      case params[:appointment][:source]
+      when "request"
+        @appointment.state = 3
 
         if @appointment.update(appointment_params)
-          format.html { redirect_to requests_path, notice: "Turno actualizado, espere la confirmación." }
+          format.html { redirect_to (params[:appointment][:source] == "request") ? requests_path : confirmed_path, notice: "Turno actualizado, espere la confirmación." }
           format.json { render :show, status: :ok, location: @appointment }
         else
-          @appointment.state= ant 
-
-          # set value for @source here, ex:
           @source = params[:appointment][:source]
-
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @appointment.errors, status: :unprocessable_entity }
         end
 
-      elsif params[:appointment][:source] == "confirmed"
-          @appointment.state= 3
+      when "confirmed"
+
+        @appointment.state= 3
+
+        if @appointment.update(appointment_params)
+          format.html { redirect_to confirmed_path, notice: "Turno actualizado, espere la confirmación." }
+          format.json { render :show, status: :ok, location: @appointment }
+        else
+          @appointment.state= ant #vuelve al estado anterior porque algo salió mal
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        end
+
+        when "user"
+          if @appointment.state == 1 || @appointment.state == 3
+            @appointment.state = 2
+          end
 
           if @appointment.update(appointment_params)
-            format.html { redirect_to confirmed_path, notice: "Turno actualizado, espere la confirmación." }
+            format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, espere la confirmación." }
             format.json { render :show, status: :ok, location: @appointment }
           else
-            @appointment.state= ant #vuelve al estado anterior porque algo salió mal
+            @source = params[:appointment][:source]
             format.html { render :edit, status: :unprocessable_entity }
             format.json { render json: @appointment.errors, status: :unprocessable_entity }
           end
 
-      elsif params[:appointment][:source] == "user"
-        if @appointment.state==1 || @appointment.state==3 #el usuario quiere actualizar (solo se pone en reprog si estaba confirm o repr por vete)
-          @appointment.state= 2
+        when "cancel_from_request"
+          @appointment.state = 4
+          @appointment.update(appointment_params)
+          format.html { redirect_to requests_path, notice: "Turno cancelado." }
+
+        when "cancel_from_confirmed"
+          @appointment.state = 4
+          @appointment.update(appointment_params)
+          format.html { redirect_to confirmed_path, notice: "Turno cancelado." }
         end
-
-        if @appointment.update(appointment_params)
-          format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, espere la confirmación." }
-          format.json { render :show, status: :ok, location: @appointment }
-        else
-          @appointment.state= ant 
-
-          # set value for @source here, ex:
-          @source = params[:appointment][:source]
-
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @appointment.errors, status: :unprocessable_entity }
-        end
-
-      elsif params[:appointment][:source] == "cancel_from_request" #actualizacion para cancelar desde solicitudes por el admin
-        @appointment.state = 4
-        @appointment.update(appointment_params)
-        format.html { redirect_to requests_path, notice: "Turno cancelado." }
-      elsif params[:appointment][:source] == "cancel_from_confirmed" #actualizacion para cancelar desde confirmados por el admin
-        @appointment.state = 4
-        @appointment.update(appointment_params)
-        format.html { redirect_to confirmed_path, notice: "Turno cancelado." }
-      end
     end
   end
 
