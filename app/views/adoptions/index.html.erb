@@ -19,14 +19,16 @@
   
 <div class="my-3" id="appointments">
     <div class="row">
-        <% @adoptions&.each do |adoption| %>
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+      <% if @adoptions.present? %>
+        <% @adoptions.each do |adoption| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-2"><%= adoption.name %></h5>
                         <p class="card-text"><strong>Raza: </strong><%= adoption.race %></p>   
-                        <p class="card-text"><strong>Tamaño: </strong><%= adoption.size %></p>
                         <p  class="card-text"><strong>Sexo: </strong><%= adoption.sex %></p>
+                        <p class="card-text"><strong>Edad: </strong><%= adoption.age %></p>
+                        <p class="card-text"><strong>Tamaño: </strong><%= adoption.size %></p>
                         <p class="card-text"><strong>Descripción: </strong><%= adoption.description %> </p>
                         <p class="card-text"><strong>Situación: </strong><%= adoption.situation %> </p>         
                     </div>
@@ -36,5 +38,11 @@
                 </div>
             </div>
         <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No hay adopciones publicadas en este momento, se el primero en buscarle nuevo hogar a tu amigo peludo!</p>
+        </div>
+      <% end %>
     </div>
 </div>   
+

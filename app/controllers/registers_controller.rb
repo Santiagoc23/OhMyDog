@@ -48,9 +48,9 @@ class RegistersController < ApplicationController
             redirect_to dashboard_home_path
         else
             # La contraseña se actualiza correctamente
-            flash[:alert] = 'La contraseñas no coincide.'
+            flash[:alert] = 'Las contraseñas no coinciden.'
             # La actualización falla, mostrar errores
-            render :edit, status: :unprocessable_entity 
+            render :edit, status: :unprocessable_entity
         end
     end
 

@@ -18,7 +18,16 @@ class AdminRegistersController < ApplicationController
             flash[:notice] = 'Administrador registrado exitosamente.'
             redirect_to admin_registers_path
         else
-            render :new
+            if @user.errors[:email].any?
+                flash[:alert] = 'El email ya está vinculado a una cuenta existente o no respeta el formato correpondiente.'
+            elsif @user.errors[:dni].any?
+                flash[:alert] = 'El DNI ya está vinculado a una cuenta existente o no respeta el formato correpondiente.'
+            elsif @user.errors[:phoneNum].any?
+                flash[:alert] = 'El numero de telefono no respeta el formato correpondiente.'
+            else
+                flash[:alert] = 'Hubo un problema al registrar el usuario.'
+            end
+            render :new, status: :unprocessable_entity
         end
     end
 

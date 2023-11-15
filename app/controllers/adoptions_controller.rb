@@ -4,7 +4,7 @@ class AdoptionsController < ApplicationController
   before_action :set_adoption, only: %i[ show edit update destroy ]
 
   # GET /adoptions or /adoptions.json
-  def index   
+  def index
     @adoptions = Adoption.order(created_at: :desc) # MAS RECIENTE AL MAS VIEJO
     @finished_adoptions = @adoptions.select { |adoption| adoption.finished? }
 
@@ -36,16 +36,19 @@ class AdoptionsController < ApplicationController
 
   # GET /adoptions/1/edit
   def edit
-    
+
   end
 
   # POST /adoptions or /adoptions.json
   def create
     @adoption = Adoption.new(adoption_params)
-    @adoption.user_id = current_user.id 
+    @adoption.user_id = current_user.id
+    if @adoption.name.blank?
+      @adoption.name= "Sin nombre"
+    end
     respond_to do |format|
       if @adoption.save
-        format.html { redirect_to adoption_url(@adoption), notice: "Adoption was successfully created." }
+        format.html { redirect_to adoption_url(@adoption), notice: "Publicación exitosa." }
         format.json { render :show, status: :created, location: @adoption }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -56,9 +59,12 @@ class AdoptionsController < ApplicationController
 
   # PATCH/PUT /adoptions/1 or /adoptions/1.json
   def update
+    if @adoption.name.blank?
+      @adoption.name= "Sin nombre"
+    end
     respond_to do |format|
       if @adoption.update(adoption_params)
-        format.html { redirect_to adoption_url(@adoption), notice: "Adoption was successfully updated." }
+        format.html { redirect_to adoption_url(@adoption), notice: "Publicación editada." }
         format.json { render :show, status: :ok, location: @adoption }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,7 +78,7 @@ class AdoptionsController < ApplicationController
     @adoption.destroy
 
     respond_to do |format|
-      format.html { redirect_to adoptions_url, notice: "Adoption was successfully destroyed." }
+      format.html { redirect_to adoptions_url, notice: "Publicación eliminada." }
       format.json { head :no_content }
     end
   end
@@ -119,7 +125,7 @@ class AdoptionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def adoption_params
-      params.require(:adoption).permit(:name, :race, :size, :sex, :description, :situation, :user_id, :finished, :confirmed_at)
+      params.require(:adoption).permit(:name, :race, :size, :sex, :description, :situation, :user_id, :finished, :confirmed_at, :age)
     end
 
     def require_owner_or_admin
