@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h4>El siguiente cuidador:</h4>
+  <p>Nombre: <%= @caregiver.name %>,</p>
+  <p>Apellido: <%= @caregiver.surname %>,</p>
+  <p>Telefono: <%= @caregiver.phoneNum %>,</p>
+  <p>Correo: <%= @caregiver.email %>,</p>
+  <h4>Recibió un reporte de:</h4>
+  <p>Nombre: <%= @name %>,</p>
+  <p>Apellido: <%= @lastname %>,</p>
+  <p>Telefono: <%= @phone %>,</p>
+  <p>Correo: <%= @mail %>,</p>
+  <h4>Esto fue lo que sucedió:</h4>
+  <p><%= @mensaje %>,</p>
+  <p><span style="color: gray;">Este correo fue enviado desde la cuenta cuyo DNI asociado es: <%= @dni %></span></p>
+</body>
+</html>

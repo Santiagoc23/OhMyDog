@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_13_223732) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_21_200941) do
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
     t.string "race"
@@ -37,6 +37,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_223732) do
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
+  create_table "caregivers", force: :cascade do |t|
+    t.string "name"
+    t.string "surname"
+    t.text "phoneNum"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "zone"
+    t.string "services"
+    t.index ["user_id"], name: "index_caregivers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -51,11 +64,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_223732) do
     t.text "phoneNum"
     t.string "dni", default: "", null: false
     t.boolean "firstLogin", default: true
+    t.integer "caregiver_id"
+    t.integer "walker_id"
+    t.index ["caregiver_id"], name: "index_users_on_caregiver_id"
     t.index ["dni"], name: "index_users_on_dni", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["walker_id"], name: "index_users_on_walker_id"
+  end
+
+  create_table "walkers", force: :cascade do |t|
+    t.string "name"
+    t.string "surname"
+    t.text "phoneNum"
+    t.string "email"
+    t.string "zone"
+    t.time "start"
+    t.time "end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_walkers_on_user_id"
   end
 
   add_foreign_key "adoptions", "users"
   add_foreign_key "appointments", "users"
+  add_foreign_key "caregivers", "users"
+  add_foreign_key "users", "caregivers"
+  add_foreign_key "users", "walkers"
+  add_foreign_key "walkers", "users"
 end

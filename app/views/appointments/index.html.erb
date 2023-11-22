@@ -15,22 +15,28 @@
 
   <div class="my-3" id="appointments">
     <div class="row">
-      <% @appointments.each do |appointment| %>
-        <% if appointment.user_id == current_user.id %> 
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <div class="card">
-              <%= render appointment %>
-              <div class = card-body>
-                <button class="btn btn-secondary d-inline-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#show_request"><%= link_to "VER MAS  ", appointment, class:"text-white text-decoration-none pe-2"%><i class="bi bi-plus-circle align-items-center mx-1"></i></button>
+      <% if @appointments.present? %>
+        <% @appointments.each do |appointment| %>
+          <% if appointment.user_id == current_user.id %> 
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+              <div class="card">
+                <%= render appointment %>
+                <div class = card-body>
+                  <button class="btn btn-secondary d-inline-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#show_request"><%= link_to "VER MAS  ", appointment, class:"text-white text-decoration-none pe-2"%><i class="bi bi-plus-circle align-items-center mx-1"></i></button>
+                </div>
               </div>
-            </div>
-          </div> 
+            </div> 
+          <% end %>
         <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No tienes turnos con nosotros, solicita uno!</p>
+        <div>
       <% end %>
+      
     </div>
   </div>
 </div>
-
 
 
 

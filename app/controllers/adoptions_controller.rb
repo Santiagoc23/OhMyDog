@@ -109,7 +109,14 @@ class AdoptionsController < ApplicationController
       omd_notifications_mail= "vete0hmydog@gmail.com" #PREGUNTAR SI TIENEN ALGUNO
 
       UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, dogmail).deliver_later
-      UserMailer.notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, dogname, omd_notifications_mail).deliver_later
+
+      if user_signed_in?
+        dni = User.find(current_user.id).dni
+      else
+        dni = -1
+      end
+      user= User.find(@adoption.user_id)
+      AdminMailer.notify_by_email(user, @adoption, modified_name, modified_lastname, modified_phone, modified_mail, dogname, omd_notifications_mail, dni).deliver_later
 
       mensaje= 'Adopción solicitada exitosamente, espere el contacto!'
       redirect_to adoptions_path, notice: mensaje
