@@ -1,0 +1,50 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Paseadores</h2>
+  <hr>
+  <% if user_signed_in? == false %>
+    <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+
+<div class="my-3" id="walkers">
+  <p class="text-muted"><%= message= 'Desde OhMyDog sabemos lo mucho que quiere a su mascota ¡Es parte de la familia! y es por eso mismo que, CADA PASEADOR/A presente en este listado es previamente ESTUDIADO Y ELEGIDO cuidadosamente por nosotros con la intención de ofrecerle a usted el mejor servicio posible para su amigo peludo.' %></p>
+  <div class="row">
+    <% if @walkers.present? %>
+      <%user= User.find(current_user.id)%>
+      <% @walkers.each do |walker| %>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text"><strong>Nombre: </strong><%= walker.name %></p>
+              <p class="card-text"><strong>Apellido: </strong><%= walker.surname %></p>
+              <p class="card-text"><strong>Zona: </strong><%= walker.zone %></p>
+              <p class="card-text"><strong>Trabaja desde </strong><%= walker.start.strftime("%H:%M") %><strong> hasta </strong><%= walker.end.strftime("%H:%M") %></p>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-between">
+                <%= link_to "Contactar", solicitar_paseador_path(walker), class: "btn btn-primary w-20"%>
+                <% if current_user.walkers.include?(walker) %>
+                  <%= link_to "Reportar", reportar_paseador_path(walker), class: "btn btn-danger"%>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-12">
+        <p>No hay paseadores cargados en la aplicación.</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+

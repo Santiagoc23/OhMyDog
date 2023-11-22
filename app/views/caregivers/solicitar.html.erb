@@ -1,0 +1,46 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Solicitud servicio de cuidado canino</h2>
+  <hr>
+  <p><strong>Datos de contacto</strong></p>
+  <%= form_with(method: :post) do |f|  %>
+    <div class="row g-3">
+      <div class="col-sm-6">
+        <%= f.label :Nombre, class:"form-label" %>
+        <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:"", value:@name, required: "required"%>
+      </div>
+
+      <div class="col-sm-6">
+        <%= f.label :Apellido, class:"form-label" %>
+        <%= f.text_field :lastname, autofocus: true, autocomplete: "lastname", class:"form-control", placeholder:"", value:@lastname, required: "required"%>
+      </div>
+              
+      <div class="col-12">
+        <%= f.label :'Correo electronico', class:"form-label" %>
+        <%= f.email_field :mail, autofocus: true, autocomplete: "mail", class:"form-control", placeholder:"", value:@mail, required: "required"%>
+      </div>
+            
+      <div class="col-12">
+        <%= f.label :Telefono, class:"form-label" %>
+        <%= f.telephone_field :phone, autofocus: true, autocomplete: "phone", class:"form-control", placeholder:"", value:@phone, required: "required"%>
+      </div>
+    </div>
+
+    <div class="col-12">
+        <%= f.label :mensaje, class: "form-label" %>
+        <%= f.text_field :mensaje, class: "form-control", placeholder: "" %>
+    </div>
+
+    <% if flash[:alert] %>
+      <div class="alert alert-danger my-2 p-1 text-center">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>   
+
+    <hr class="my-4">
+    <%= f.submit "Contactar", class:"w-100 btn btn-primary btn-lg" %>
+  <% end %>
+
+  <div class="my-2">
+    <%= link_to "Volver atras", index_user_caregiver_path, class:"w-100 btn btn-outline-secondary btn-lg"%>
+  </div>
+</div>

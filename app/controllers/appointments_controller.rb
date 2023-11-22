@@ -17,6 +17,17 @@ class AppointmentsController < ApplicationController
       Appointment.where("time < ?", DateTime.now).destroy_all
       #@appointments = Appointment.order(:time)
       @appointments = Appointment.where.not(state: [1, 4]).order(time: :asc)
+
+      @ux1= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 0).count
+      @ux2= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 2).count
+      @ux3= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 3).count
+      @dx1= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow, 0).count
+      @dx2= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow, 2).count
+      @dx3= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow, 3).count
+      @tx1= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 1, 0).count
+      @tx2= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 1, 2).count
+      @tx3= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 1, 3).count
+
     else
       redirect_to dashboard_home_path
     end
@@ -25,6 +36,13 @@ class AppointmentsController < ApplicationController
   def index_confirmed
     if current_user.admin?
       Appointment.where("time < ?", DateTime.now).destroy_all
+
+      @ux1= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 1).count
+      @ux2= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow, 1).count
+      @ux3= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 1, 1).count
+      @ux4= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 2, 1).count
+      @ux5= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 3, 1).count
+
       @appointments = Appointment.where(state: [1]).order(time: :asc)
     else
       redirect_to dashboard_home_path
@@ -80,6 +98,7 @@ class AppointmentsController < ApplicationController
       @appointment = Appointment.find(params[:id])
       @appointment.update(state: 1)
       redirect_to requests_path
+      flash[:notice] = "Turno confirmado"
     else
       redirect_to dashboard_home_path
     end

@@ -11,7 +11,31 @@
     </div>
   <% end %>
 
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Informe de turnos</th>
+        <th scope="col">Hoy </th>
+        <th scope="col">Mañana</th>
+        <th scope="col">Pasado</th>
+        <th scope="col">En 4 días</th>
+        <th scope="col">En 5 días</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-light">
+        <th scope="row">Confirmados</th>
+        <td><%= @ux1 %></td>
+        <td><%= @ux2 %></td>
+        <td><%= @ux3 %></td>
+        <td><%= @ux4 %></td>
+        <td><%= @ux5 %></td>
+      </tr>
+    </tbody>
+  </table>
+
   <div class="my-3" id="appointments">
+    
     <div class="row">
       <% if @appointments.present? %>
         <% @appointments.each do |appointment| %>
@@ -26,7 +50,7 @@
         <% end %>
       <% else %>
         <div class="col-12">
-          <p>No hay turnos confirmados por el momento</p>
+          <p>No hay turnos confirmados por el momento.</p>
         </div>
       <% end %>
     </div>
