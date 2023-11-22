@@ -1,0 +1,46 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Cuidadores</h2>
+  <hr>
+  <% if user_signed_in? == false %>
+    <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to "Agregar cuidador", new_caregiver_path, class:"btn btn-primary px-3 mb-2"%>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  
+<div class="my-3" id="caregivers">
+    <div class="row">
+      <% if @caregivers.present? %>
+        <% @caregivers.each do |caregiver| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2"><%= caregiver.name + ' ' + caregiver.surname %></h5>
+                        <p class="card-text"><strong>Zona: </strong><%= caregiver.zone %></p>
+                        <p class="card-text"><strong>Servicios: </strong><%= caregiver.services %></p>
+                        <p class="card-text"><strong>Teléfono: </strong><%= caregiver.phoneNum %></p>
+                        <p class="card-text"><strong>Correo: </strong><%= caregiver.email %></p>                         
+                    </div>
+                    <div class = card-body>
+                        <button class="btn btn-secondary d-inline-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#show_request"><%= link_to "SELECCIONAR", caregiver, class:"text-white text-decoration-none pe-2"%><i class="bi bi-plus-circle align-items-center mx-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No hay cuidadores cargados en la aplicación.</p>
+        </div>
+      <% end %>
+    </div>
+</div>   
+
