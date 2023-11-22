@@ -1,0 +1,21 @@
+<div class="container-fluid mt-4 px-2">
+    <h2>Perros de <%= @user.surname %>, <%= @user.name %></h2>
+    <hr>
+
+    <div class="my-3" id="dogs">
+    <div class="row">
+      <% @dogs.each do |dog| %>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <%= render dog %>
+            <div class="text-center">
+              <%= link_to "Ver mas", dog, class:"btn btn-outline-secondary" %>
+            </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+

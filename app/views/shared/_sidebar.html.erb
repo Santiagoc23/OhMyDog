@@ -35,6 +35,13 @@
                         <i class="bi bi-file-earmark"></i> Adopción
                     <% end %>
                 </li>
+
+                <li class="nav-item">
+                  <%= link_to dogs_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                      <%= image_tag("dog-solid.svg", class: "example-icon") %>Perros
+                  <% end %>
+                  </li>
+                  
                 <% if current_user && current_user.admin? %>
                   <li class="nav-item">
                   <%= link_to registers_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>

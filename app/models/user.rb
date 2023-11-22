@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :appointments
   has_many :adoptions
+  has_many :dogs
   
   validates :dni, presence: true, uniqueness: true, 
   length: { in: 7..8 }, format: { with: /\A\d+\z/, message: "debe contener solo números" }

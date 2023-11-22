@@ -1,9 +1,12 @@
 class Appointment < ApplicationRecord
   belongs_to :user
+  belongs_to :dog, optional: true
+  validates :query_type, presence: { message: "Debe seleccionar el tipo de consulta." }
   validates :time, presence: { message: "No puede dejar el turno en blanco." }
   validate :future_time
   validate :it_isnt_sunday
   validate :time_within_valid_ranges
+
 
   private
 
@@ -29,5 +32,4 @@ class Appointment < ApplicationRecord
       end
     end
   end
-
 end

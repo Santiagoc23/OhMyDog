@@ -1,0 +1,54 @@
+<div class="container-fluid mt-4 px-2">
+  
+  <% if current_user.admin? %>
+    <h2>Perros</h2>
+    <hr>
+    <div>
+      <%= link_to "Agregar perro", new_dog_path, class:"btn btn-secondary me-2" %>
+      <%= form_tag dogs_path, method: :get, class: "my-3" do %>
+        <div class="input-group w-25">
+          <%= text_field_tag :dni_search, params[:dni_search], class: "form-control w-25", placeholder: "DNI del dueño"%>
+          <%= button_tag(type: 'submit', class: 'btn btn-success') do %>
+            <i class="bi bi-search"></i>
+          <% end %>
+          <!-- Botón para restaurar la tabla completa -->
+          <%= link_to dogs_path, class:"btn btn-outline-secondary" do%>
+            <i class="bi bi-arrow-counterclockwise"></i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else%>
+    <h2>Mis perros</h2>
+    <hr>
+  <% end %>
+
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="my-3" id="dogs">
+    <div class="row">
+      <% if @dogs.present? == false %>
+        <p>Todavia no has asistido a la veterinaria con tus perros.</p>
+      <% end %>
+      <% @dogs.each do |dog| %>        
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <%= render dog %>
+            <div class="text-center">
+              <%= link_to "Ver mas", dog, class:"btn btn-outline-secondary" %>
+            </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
