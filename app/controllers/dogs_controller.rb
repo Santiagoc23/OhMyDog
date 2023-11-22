@@ -52,7 +52,7 @@ class DogsController < ApplicationController
       
     respond_to do |format|
       if @dog.save
-        format.html { redirect_to dog_url(@dog), notice: "Dog was successfully created." }
+        format.html { redirect_to dog_url(@dog), notice: "El perro fue agregado exitosamente." }
         format.json { render :show, status: :created, location: @dog }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -79,7 +79,7 @@ class DogsController < ApplicationController
     @dog.destroy
 
     respond_to do |format|
-      format.html { redirect_to dogs_url, notice: "Dog was successfully destroyed." }
+      format.html { redirect_to dogs_url, notice: "El perro se ha eliminado exitosamente." }
       format.json { head :no_content }
     end
   end

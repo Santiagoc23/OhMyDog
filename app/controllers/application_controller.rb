@@ -14,4 +14,10 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def only_user
+        if current_user.admin?
+            redirect_to dashboard_home_path
+        end
+    end
+
 end

@@ -2,6 +2,7 @@ class CaregiversController < ApplicationController
   before_action :authenticate_user!
   before_action :set_caregiver, only: %i[ show edit update destroy ]
   before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy]
 
   # GET /caregivers or /caregivers.json
   def index
