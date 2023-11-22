@@ -1,21 +1,30 @@
 <div class="card-body" id="<%= dom_id appointment %>">
   <h5 class="card-title mb-2"><strong>Horario:</strong> <%= appointment.time.strftime("%d/%m/%Y %H:%M") %></h5>
-  <h6 class="card-subtitle mb-2 text-body-secondary">
-    <strong>Estado:</strong>
-    <% case appointment.state %>
-      <% when 0 %>
-        Pendiente de confirmación
-      <% when 1 %>
-        Confirmado
-      <% when 2 %>
-        Esperando que veterinaria confirme el nuevo horario 
-      <% when 3 %>
-        Veterinaria quiere reprogramar 
-      <% when 4 %>
-        Veterinaria canceló el turno
-      <% else %>
-        <%= "Ocurrió un error recuperando el estado del turno." %>
+  <div class="card-text py-1">
+    <p>
+      <strong>Estado:</strong>
+      <% case appointment.state %>
+        <% when 0 %>
+          Pendiente de confirmación
+        <% when 1 %>
+          Confirmado
+        <% when 2 %>
+          Esperando que veterinaria confirme el nuevo horario 
+        <% when 3 %>
+          Veterinaria quiere reprogramar 
+        <% when 4 %>
+          Veterinaria canceló el turno
+        <% else %>
+          <%= "Ocurrió un error recuperando el estado del turno." %>
+      <% end %>
+    </p>
+    <p><strong>Tipo de consulta:</strong> <%= appointment.query_type %></p>
+    
+    <% if appointment.dog_id.nil? %>
+      <p><strong>Turno para: </strong>Nuevo perro</p>
+    <% else %>
+       <p><strong>Turno para: </strong> <%= appointment.dog.name %></p>
     <% end %>
-  </h6>
-  <p class="card-text"><strong>Mensaje de la veterinaria:</strong> <%= appointment.message %></p>            
+    <p><strong>Mensaje de la veterinaria:</strong> <%= appointment.message %></p>   
+  </div>
 </div>

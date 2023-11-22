@@ -3,7 +3,11 @@ class RegistersController < ApplicationController
     before_action :authenticate_admin, except: [:edit, :update]
 
     def index
-        @users = User.where(role: "user")
+        if params[:dni].present?
+            @users = User.where(role: 'user', dni: params[:dni])
+        else
+            @users = User.where(role: 'user')
+        end
     end
 
     def new

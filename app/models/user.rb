@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :appointments
   has_many :adoptions
+  has_many :dogs
   has_many :caregivers, dependent: :nullify
   has_many :walkers, dependent: :nullify
 

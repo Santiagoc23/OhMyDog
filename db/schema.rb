@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.0].define(version: 2023_11_21_200941) do
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
@@ -34,8 +35,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_200941) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "query_type"
+    t.integer "dog_id"
+    t.index ["dog_id"], name: "index_appointments_on_dog_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
+
+
+  create_table "dogs", force: :cascade do |t|
+    t.string "name"
+    t.string "breed"
+    t.string "gender"
+    t.date "birthdate"
+    t.integer "age"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_dogs_on_user_id"
+   end
 
   create_table "caregivers", force: :cascade do |t|
     t.string "name"
@@ -88,7 +105,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_200941) do
   end
 
   add_foreign_key "adoptions", "users"
+  add_foreign_key "appointments", "dogs"
   add_foreign_key "appointments", "users"
+  add_foreign_key "dogs", "users"
   add_foreign_key "caregivers", "users"
   add_foreign_key "users", "caregivers"
   add_foreign_key "users", "walkers"

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-
-
+  resources :dogs
   resources :registers, only: [:index, :new, :create]
   resources :admin_registers, only: [:index, :new, :create]
   get 'dashboard/home'
@@ -9,7 +8,11 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:registrations], controllers: { sessions:'users/sessions'}
 
   # Rutas para editar usuario y otras funcionalidades proporcionadas por Devise
-  resources :users, only: [:edit, :update]
+  resources :users, only: [:edit, :update] do
+    member do
+      get 'user_dogs', to: 'dogs#index_user_dogs', as: 'user_dogs'
+    end
+  end
 
   # Rutas personalizadas para el registro de usuario
   get "/registers", to: "registers#new", as: :new_user_registration

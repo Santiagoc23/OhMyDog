@@ -36,7 +36,7 @@ class AdoptionsController < ApplicationController
 
   # GET /adoptions/1/edit
   def edit
-
+    
   end
 
   # POST /adoptions or /adoptions.json

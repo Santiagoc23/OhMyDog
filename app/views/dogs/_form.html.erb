@@ -1,0 +1,60 @@
+    <div class="bg-body-tertiary"> 
+      <div class="container">
+        <div class="d-flex justify-content-center align-items-center mt-4">
+          <div class="col-md-7 col-lg-8">
+            <%= form_with(model: dog) do |form| %>
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <%= form.label :Nombre, class:"form-label" %>
+                  <%= form.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:"", value:"", required: "required"%>
+                </div>
+
+                <div class="col-sm-6">
+                  <%= form.label :"Documento del dueño", class:"form-label" %>
+                  <%= form.text_field :dni, autofocus: true, autocomplete: "dni", class:"form-control", placeholder:"", value:"", required: "required"%>
+                </div>
+                  
+                <div class="col-sm-6">
+                  <%= form.label :'Raza', class:"form-label" %>
+                  <%= form.text_field :breed, autofocus: true, autocomplete: "breed", class:"form-control", placeholder:"", value:"", required: "required"%>
+                </div>
+                
+                <div class="col-sm-6">
+                  <%= form.label :Genero, class:"form-label" %>
+                  <%= form.select :gender, options_for_select(['Hembra', 'Macho']), { include_blank: '---' }, { class: 'form-select', required: 'required' } %>        
+                </div>
+                
+                <div class="col-sm-6">
+                  <%= form.label :'Fecha de nacimiento', class:"form-label" %>
+                  <%= form.date_field :birthdate, class:"form-control form-control-inline"%>
+                </div>
+                <div class="col-sm-6">
+                  <%= form.label :'Edad aproximada', class:"form-label" %>
+                  <%= form.number_field :age, min:0, class:"form-control"%>
+                </div>
+
+                <hr class="my-4">
+
+                <% if @dog.errors.any? %>
+                <div class="alert alert-danger  w-100" role="alert">
+                  <ul class="list-unstyled">
+                    <% dog.errors.each do |error| %>
+                      <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
+                    <% end %>
+                  </ul>
+                </div>
+                <% end %>
+
+                <div class="col-sm-6">
+                  <%= form.submit "Cargar perro", class:"w-100 btn btn-primary btn-lg" %>
+                </div>
+
+                <div class="col-sm-6">
+                  <%= link_to "Volver atras", dogs_path, class: "btn btn-outline-secondary btn-lg w-100"%>
+                </div>
+              </div>    
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>

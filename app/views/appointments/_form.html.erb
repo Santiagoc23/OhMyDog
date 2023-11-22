@@ -20,6 +20,14 @@
       
       <div class="modal-footer flex-column align-items-stretch w-100  pb-3 border-top-0">
         <%= form.datetime_field :time, class: "form-control form-control-inline" %>
+        <div class="col-sm-12">
+          <%= form.label :Tipo_de_consulta, class:"form-label" %>
+          <%= form.select :query_type, options_for_select(['Consulta general', 'Urgencias', 'Castración', 'Vacunación tipo A', 'Vacunación tipo B']), { prompt: 'Seleccione el tipo de consulta'}, { class: 'form-select', required: 'required' } %>      
+        </div>
+        <div class="col-sm-12">
+          <%= form.label :Perro, class:"form-label" %> 
+          <%= form.collection_select :dog_id, (current_user.dogs + [Dog.new(id: nil, name: 'Nuevo perro')]), :id, :name, { prompt: "Seleccionar perro" },{ class: 'form-select' , required: 'required' } %> 
+        </div>
         <%= form.hidden_field :source, value: @from %>
         <%= form.submit "Programar turno", class: "btn btn-lg btn-primary"%>
   <% end %>
