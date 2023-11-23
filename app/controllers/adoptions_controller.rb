@@ -1,6 +1,6 @@
 class AdoptionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :solicitar]
-  before_action :require_owner_or_admin, only: [:edit, :update, :confirm, :destroy  ]
+  before_action :require_owner_or_admin, only: [:edit, :update, :confirm, :destroy, :confirm_delete]
   before_action :set_adoption, only: %i[ show edit update destroy ]
 
   # GET /adoptions or /adoptions.json
@@ -81,6 +81,10 @@ class AdoptionsController < ApplicationController
       format.html { redirect_to adoptions_url, notice: "Publicación eliminada." }
       format.json { head :no_content }
     end
+  end
+
+  def confirm_delete
+
   end
 
   def solicitar

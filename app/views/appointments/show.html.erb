@@ -1,7 +1,7 @@
 <div class="modal modal-sheet position-static d-block p-3 py-md-4" tabindex="-1" role="dialog" id="modalTour">
   <div class="modal-dialog" role="document">
     <div class="modal-content rounded-4 shadow">
-      <div class="modal-body p-5">
+      <div class="modal-body px-5 py-4">
         <h2 class="fw-bold mb-0 fs-3 text-center">ACCIONES PARA EL TURNO</h2>
         <div class="text-center my-3">
           <%= render @appointment %>
@@ -26,9 +26,11 @@
           <% end %> 
           
           <!-- SI ESTA CANCELADO POR LA VT MUESTRA PARA BORRAR DE UNA-->
+          <div class="col-12"> 
           <% if @appointment.state == 4%>
             <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment), class: "btn btn-danger w-100" %> 
           <% end %>
+          </div>
           <div class="col-12"> 
             <%= link_to "Volver atras", appointments_path, class: "btn btn-outline-secondary w-100 "%>
           </div>

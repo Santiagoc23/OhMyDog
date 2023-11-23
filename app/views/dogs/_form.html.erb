@@ -1,4 +1,4 @@
-    <div class="bg-body-tertiary"> 
+    <div class=""> 
       <div class="container">
         <div class="d-flex justify-content-center align-items-center mt-4">
           <div class="col-md-7 col-lg-8">
@@ -21,7 +21,7 @@
                 
                 <div class="col-sm-6">
                   <%= form.label :Genero, class:"form-label" %>
-                  <%= form.select :gender, options_for_select(['Hembra', 'Macho']), { include_blank: '---' }, { class: 'form-select', required: 'required' } %>        
+                  <%= form.select :gender, options_for_select(['Hembra', 'Macho']), { prompt: "Seleccionar el genero" }, { class: 'form-select', required: 'required' } %>        
                 </div>
                 
                 <div class="col-sm-6">
@@ -31,9 +31,10 @@
                 <div class="col-sm-6">
                   <%= form.label :'Edad aproximada', class:"form-label" %>
                   <%= form.number_field :age, min:0, class:"form-control"%>
+                  <p class="text-muted mt-1">En caso de no saber la fecha de nacimiento, puede agregar la edad aproximada.</p>
                 </div>
 
-                <hr class="my-4">
+                <hr class="my-2">
 
                 <% if @dog.errors.any? %>
                 <div class="alert alert-danger  w-100" role="alert">
@@ -46,11 +47,11 @@
                 <% end %>
 
                 <div class="col-sm-6">
-                  <%= form.submit "Cargar perro", class:"w-100 btn btn-primary btn-lg" %>
+                  <%= form.submit "Cargar perro", class:"w-100 btn btn-primary" %>
                 </div>
 
                 <div class="col-sm-6">
-                  <%= link_to "Volver atras", dogs_path, class: "btn btn-outline-secondary btn-lg w-100"%>
+                  <%= link_to "Volver atras", dogs_path, class: "btn btn-outline-secondary w-100"%>
                 </div>
               </div>    
             <% end %>

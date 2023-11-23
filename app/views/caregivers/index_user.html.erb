@@ -15,36 +15,37 @@
   <% end %>
 
 
-<div class="my-3" id="caregivers">
-  <p class="text-muted"><%= message= 'Desde OhMyDog sabemos lo mucho que quiere a su mascota ¡Es parte de la familia! y es por eso mismo que, CADA CUIDADOR/A presente en este listado es previamente ESTUDIADO Y ELEGIDO cuidadosamente por nosotros con la intención de ofrecerle a usted el mejor servicio posible para su amigo peludo.' %></p>
-  <div class="row">
-    <% if @caregivers.present? %>
-      <%user= User.find(current_user.id)%>
-      <% @caregivers.each do |caregiver| %>
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <p class="card-text"><strong>Nombre: </strong><%= caregiver.name %></p>
-              <p class="card-text"><strong>Apellido: </strong><%= caregiver.surname %></p>
-              <p class="card-text"><strong>Zona: </strong><%= caregiver.zone %></p>
-              <p class="card-text"><strong>Servicios: </strong><%= caregiver.services %></p>
-            </div>
-            <div class="card-footer">
-              <div class="d-flex justify-content-between">
-                <%= link_to "Contactar", solicitar_cuidador_path(caregiver), class: "btn btn-primary w-20"%>
-                <% if current_user.caregivers.include?(caregiver) %>
-                  <%= link_to "Reportar", reportar_cuidador_path(caregiver), class: "btn btn-danger"%>
-                <% end %>
+  <div class="my-3" id="caregivers">
+    <p class="text-muted"><%= message= 'Desde OhMyDog sabemos lo mucho que quiere a su mascota ¡Es parte de la familia! y es por eso mismo que, CADA CUIDADOR/A presente en este listado es previamente ESTUDIADO Y ELEGIDO cuidadosamente por nosotros con la intención de ofrecerle a usted el mejor servicio posible para su amigo peludo.' %></p>
+    <div class="row">
+      <% if @caregivers.present? %>
+        <% user= User.find(current_user.id) %>
+        <% @caregivers.each do |caregiver| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text"><strong>Nombre: </strong><%= caregiver.name %></p>
+                <p class="card-text"><strong>Apellido: </strong><%= caregiver.surname %></p>
+                <p class="card-text"><strong>Zona: </strong><%= caregiver.zone %></p>
+                <p class="card-text"><strong>Servicios: </strong><%= caregiver.services %></p>
+              </div>
+              <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                  <%= link_to "Contactar", solicitar_cuidador_path(caregiver), class: "btn btn-primary w-20"%>
+                  <% if current_user.caregivers.include?(caregiver) %>
+                    <%= link_to "Reportar", reportar_cuidador_path(caregiver), class: "btn btn-danger"%>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No hay cuidadores disponibles por el momento.</p>
         </div>
       <% end %>
-    <% else %>
-      <div class="col-12">
-        <p>No hay cuidadores cargados en la aplicación.</p>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
 

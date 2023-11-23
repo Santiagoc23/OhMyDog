@@ -1,8 +1,8 @@
 class CaregiversController < ApplicationController
   before_action :authenticate_user!
   before_action :set_caregiver, only: %i[ show edit update destroy ]
-  before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy]
+  before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
+  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
 
   # GET /caregivers or /caregivers.json
   def index
@@ -61,6 +61,10 @@ class CaregiversController < ApplicationController
       format.html { redirect_to caregivers_url, notice: "Cuidador eliminado exitosamente." }
       format.json { head :no_content }
     end
+  end
+
+  def confirm_delete
+    @caregiver = Caregiver.find(params[:id])
   end
 
   def reportar

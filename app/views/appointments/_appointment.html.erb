@@ -25,6 +25,9 @@
     <% else %>
        <p><strong>Turno para: </strong> <%= appointment.dog.name %></p>
     <% end %>
-    <p><strong>Mensaje de la veterinaria:</strong> <%= appointment.message %></p>   
+    
+    <% if current_user.role == 'user' %>
+      <p><strong>Mensaje de la veterinaria:</strong> <%= appointment.message %></p>
+    <% end %>   
   </div>
 </div>

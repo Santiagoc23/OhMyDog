@@ -5,7 +5,7 @@
     <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
   <% end %>
   <% if user_signed_in? %>
-    <%= link_to "Agregar cuidador", new_walker_path, class:"btn btn-primary px-3 mb-2"%>
+    <%= link_to "Agregar paseador", new_walker_path, class:"btn btn-primary px-3 mb-2"%>
   <% end %>
   <% if flash[:alert].present? %>
     <div class="alert alert-danger">  

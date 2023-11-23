@@ -3,15 +3,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content rounded-4 shadow">
         <div class="modal-header border-bottom-0">
-          <h3 class="modal-title fs-5 ">Confirmar eliminación</h3>
+          <h2 class="modal-title fs-5 ">Confirmar eliminación</h2>
         </div>
         <div class="modal-body py-0">
-          <p>¿Estás seguro de que deseas eliminar este turno? Esta acción no tiene marcha atrás.
-          <br><strong> Fecha y horario: </strong><%= @appointment.time.strftime("%d/%m/%Y %H:%M") %> hs.</p>
+            <p>¿Estás seguro de que deseas eliminar esta publicación de adopción?</p>
         </div>
         <div class="modal-footer flex-column align-items-stretch w-100 pb-3 border-top-0">
-          <%= button_to "Confirmar", @appointment, method: :delete, class:'btn btn-danger w-100' %>
-          <%= link_to "Volver atras", appointment_path, class:"btn btn-secondary" %>
+          <%= button_to "Confirmar", @adoption, method: :delete, class:'btn btn-danger w-100' %>
+          <%= link_to "Volver atras", adoption_path, class:"btn btn-outline-secondary" %>
         </div>     
       </div>
     </div>

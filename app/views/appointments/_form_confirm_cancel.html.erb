@@ -9,9 +9,9 @@
         <br><strong> Fecha y horario: </strong><%= @appointment.time.strftime("%d/%m/%Y %H:%M") %> hs.</p>
       </div>
       
-      <div class="modal-footer flex-column align-items-stretch w-100  pb-3 border-top-0">
+      <div class="modal-footer flex-column align-items-stretch w-100  mb-2 pb-3 border-top-0">
         <%= form.label :Motivo%>
         <%= form.text_area :message, class:"form-control", id:"exampleFormControlTextarea1", rows:"3", maxlength:"200"%>
         <%= form.hidden_field :source, value: @from %>
-        <%= form.submit "Cancelar turno", class: "btn btn-lg btn-danger"%>
+        <%= form.submit "Confirmar cancelación", class: "btn btn-danger"%>
   <% end %>

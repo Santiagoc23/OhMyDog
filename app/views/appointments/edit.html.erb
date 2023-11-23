@@ -6,15 +6,16 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content rounded-4 shadow">
         <%= render "form", appointment: @appointment, from: @source %>
-      
+
+
         <% if params[:source] == "confirmed" %>
-          <%= link_to "Volver atras", confirmed_path, class:"btn btn-lg btn-secondary" %>
+          <%= link_to "Volver atras", confirmed_path, class:"btn btn-outline-secondary" %>
         <% elsif params[:source] == "request" %>
-          <%= link_to "Volver atras", requests_path, class:"btn btn-lg btn-secondary" %>
+          <%= link_to "Volver atras", requests_path, class:"btn btn-outline-secondary" %>
         <% elsif params[:source] == "user" %>
-          <%= link_to "Volver atras", @appointment, class:"btn btn-lg btn-secondary" %> 
+          <%= link_to "Volver atras", @appointment, class:"btn btn-outline-secondary" %> 
         <% end %>
-        </div>   
+ 
       </div>
     </div>
   </div>

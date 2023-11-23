@@ -35,7 +35,9 @@
 
   <div class="my-3" id="dogs">
     <div class="row">
-      <% if @dogs.present? == false %>
+      <% if @dogs.present? == false && current_user.admin? %>
+        <p>Por el momento no hay perros registrados.</p>
+      <% elsif @dogs.present? == false %>
         <p>Todavia no has asistido a la veterinaria con tus perros.</p>
       <% end %>
       <% @dogs.each do |dog| %>        

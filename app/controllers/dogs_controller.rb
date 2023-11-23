@@ -84,6 +84,10 @@ class DogsController < ApplicationController
     end
   end
 
+  def confirm_delete
+    @dog = Dog.find(params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dog

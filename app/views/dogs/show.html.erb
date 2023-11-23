@@ -8,11 +8,11 @@
         <div class="row g-3 text-center mt-2">
           <% if current_user.admin? %>
             <div class="col-6">
-              <%= link_to 'Eliminar perro',@dog, data:{turbo_method: :delete, turbo_confirm: '¿Estas seguro que deseas eliminar a este perro?'}, class: "btn btn-lg btn-outline-danger w-100" %>
+              <%= link_to "Eliminar", confirm_delete_dog_path(@dog), class: "btn btn-danger w-100" %>
             </div>
           <% end %>
           <div class="col-6">
-            <%= link_to "Volver atras", dogs_path, class: "btn btn-lg btn-outline-secondary w-100" %>
+            <%= link_to "Volver atras", dogs_path, class: "btn btn-outline-secondary w-100" %>
           </div>
         </div>  
       </div>

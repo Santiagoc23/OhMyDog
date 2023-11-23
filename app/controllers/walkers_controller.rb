@@ -1,8 +1,8 @@
 class WalkersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_walker, only: %i[ show edit update destroy ]
-  before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy]
+  before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
+  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
 
   # GET /walkers or /walkers.json
   def index
@@ -61,6 +61,10 @@ class WalkersController < ApplicationController
       format.html { redirect_to walkers_url, notice: "Paseador eliminado exitosamente." }
       format.json { head :no_content }
     end
+  end
+
+  def confirm_delete
+    @walker = Walker.find(params[:id])
   end
 
   def reportar

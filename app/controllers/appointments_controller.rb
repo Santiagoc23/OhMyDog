@@ -140,6 +140,8 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
     @appointment.user_id = current_user.id
+    @appointment.dog_id = (@appointment.dog_id == 0) ? nil : @appointment.dog_id
+
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to appointment_url(@appointment), notice: "Solicitud de turno enviada, espere la confirmacion desde la veterinaria." }
@@ -159,7 +161,7 @@ class AppointmentsController < ApplicationController
         @appointment.state = 3
 
         if @appointment.update(appointment_params)
-          format.html { redirect_to (params[:appointment][:source] == "request") ? requests_path : confirmed_path, notice: "Turno actualizado, espere la confirmación." }
+          format.html { redirect_to (params[:appointment][:source] == "request") ? requests_path : confirmed_path, notice: "Turno actualizado, en espera de confirmación." }
           format.json { render :show, status: :ok, location: @appointment }
         else
           @source = params[:appointment][:source]
@@ -172,7 +174,7 @@ class AppointmentsController < ApplicationController
         @appointment.state= 3
 
         if @appointment.update(appointment_params)
-          format.html { redirect_to confirmed_path, notice: "Turno actualizado, espere la confirmación." }
+          format.html { redirect_to confirmed_path, notice: "Turno actualizado, en espera de confirmación." }
           format.json { render :show, status: :ok, location: @appointment }
         else
           @appointment.state= ant #vuelve al estado anterior porque algo salió mal
@@ -186,7 +188,7 @@ class AppointmentsController < ApplicationController
           end
 
           if @appointment.update(appointment_params)
-            format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, espere la confirmación." }
+            format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, en espera de confirmación." }
             format.json { render :show, status: :ok, location: @appointment }
           else
             @source = params[:appointment][:source]

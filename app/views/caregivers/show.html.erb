@@ -8,13 +8,13 @@
         </div>
         <div class="row g-3 text-center pb-2">
           <div class="col-6">
-            <%= link_to "Editar", edit_caregiver_path(@caregiver), class: "btn btn-lg btn-primary w-100"%>
+            <%= link_to "Editar", edit_caregiver_path(@caregiver), class: "btn btn-primary w-100"%>
           </div>
           <div class="col-6">
-            <%= button_to "Eliminar", @caregiver, method: :delete, class: 'btn btn-lg btn-danger w-100', onclick: 'return confirm("¿Estás seguro de que deseas eliminar este cuidador/a?")' %>
+            <%= link_to "Eliminar", confirm_delete_caregiver_path(@caregiver), class: "btn btn-danger w-100" %>
           </div>
           <div class="col-6">
-              <%= link_to "Volver atras", caregivers_path, class: "btn btn-lg btn-outline-secondary w-100 "%>
+              <%= link_to "Volver atras", caregivers_path, class: "btn btn-outline-secondary w-100 "%>
           </div>  
         </div>
       </div>

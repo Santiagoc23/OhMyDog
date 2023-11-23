@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :dogs
+  resources :dogs do
+    member do
+      get 'confirm_delete'
+    end
+  end
   resources :registers, only: [:index, :new, :create]
   resources :admin_registers, only: [:index, :new, :create]
   get 'dashboard/home'
@@ -22,15 +26,22 @@ Rails.application.routes.draw do
   patch "/registers/update/:id", to: "registers#update", as: :update_user_registration
 
   # Rutas de cuidadores y paseadores
-
-  resources :caregivers
+  resources :caregivers do
+    member do
+      get 'confirm_delete'
+    end
+  end
   get '/u/caregivers', to: 'caregivers#index_user', as: :index_user_caregiver
   post 'u/caregivers/:id/request', to: 'caregivers#solicitar'
   get 'u/caregivers/:id/request', to: 'caregivers#solicitar', as: :solicitar_cuidador
   post 'u/caregivers/:id/report', to: 'caregivers#reportar'
   get 'u/caregivers/:id/report', to: 'caregivers#reportar', as: :reportar_cuidador
 
-  resources :walkers
+  resources :walkers do
+    member do
+      get 'confirm_delete'
+    end
+  end
   get '/u/walkers', to: 'walkers#index_user', as: :index_user_walker
   post 'u/walkers/:id/request', to: 'walkers#solicitar'
   get 'u/walkers/:id/request', to: 'walkers#solicitar', as: :solicitar_paseador
@@ -63,11 +74,11 @@ Rails.application.routes.draw do
   resources :adoptions do
     member do
       patch 'confirm'
+      get 'confirm_delete'
     end
   end
 
   post 'adoption/:id/request', to: 'adoptions#solicitar'
   get 'adoption/:id/request', to: 'adoptions#solicitar', as: :solicitar
-
 
 end

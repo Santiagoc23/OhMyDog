@@ -1,6 +1,6 @@
 class Dog < ApplicationRecord
   belongs_to :user,  optional: true
-  has_many :appointment
+  has_many :appointment, dependent: :destroy
   validates :name, uniqueness: { scope: :user_id, case_sensitive: false, message: "El nombre ya está en uso para este usuario" }
   validates :gender, inclusion: { in: ['Macho', 'Hembra'], message: "El sexo solo puede ser 'Macho' o 'Hembra'" }
   validates :age, allow_blank: true, numericality: { only_integer: true}
