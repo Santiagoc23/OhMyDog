@@ -6,7 +6,7 @@ class AppointmentsController < ApplicationController
   def index
     if current_user.role == 'user'
       Appointment.where("time < ?", DateTime.now).destroy_all
-      @appointments = Appointment.order(:time)
+      @appointments = current_user.appointments.order(:time)
     else
       redirect_to dashboard_home_path
     end
@@ -140,7 +140,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
     @appointment.user_id = current_user.id
-    @appointment.dog_id = (@appointment.dog_id == 0) ? nil : @appointment.dog_id
+    #@appointment.dog_id = (@appointment.dog_id == 0) ? nil : @appointment.dog_id
 
     respond_to do |format|
       if @appointment.save
@@ -155,11 +155,11 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1 or /appointments/1.json
   def update
+
     respond_to do |format|
       case params[:appointment][:source]
       when "request"
         @appointment.state = 3
-
         if @appointment.update(appointment_params)
           format.html { redirect_to (params[:appointment][:source] == "request") ? requests_path : confirmed_path, notice: "Turno actualizado, en espera de confirmación." }
           format.json { render :show, status: :ok, location: @appointment }
@@ -234,6 +234,8 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      params.require(:appointment).permit(:time, :state, :message, :user_id, :query_type, :dog_id)
+      modified_params = params.require(:appointment).permit(:time, :state, :message, :user_id, :query_type, :dog_id)
+      modified_params[:dog_id] = nil if modified_params[:dog_id].to_i == 0
+      modified_params
     end
 end

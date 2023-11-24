@@ -1,5 +1,10 @@
 <div class="card-body" id="<%= dom_id appointment %>">
-  <h5 class="card-title mb-2"><strong>Horario:</strong> <%= appointment.time.strftime("%d/%m/%Y %H:%M") %></h5>
+  
+  <% if current_user.admin? %>
+    <h5><%= appointment.user.surname %> <%= appointment.user.name %></h5>
+  <% end %>
+  
+  <p class="card-title mb-2"><strong>Horario:</strong> <%= appointment.time.strftime("%d/%m/%Y %H:%M") %></p>
   <div class="card-text py-1">
     <p>
       <strong>Estado:</strong>

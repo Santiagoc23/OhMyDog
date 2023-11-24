@@ -17,7 +17,6 @@
     <div class="row">
       <% if @appointments.present? %>
         <% @appointments.each do |appointment| %>
-          <% if appointment.user_id == current_user.id %> 
             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
               <div class="card">
                 <%= render appointment %>
@@ -26,7 +25,6 @@
                 </div>
               </div>
             </div> 
-          <% end %>
         <% end %>
       <% else %>
         <div class="col-12">
