@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_02_234752) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_212239) do
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
     t.string "race"
@@ -63,6 +63,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_234752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_dogs_on_user_id"
+  end
+
+  create_table "missing_posts", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.string "size"
+    t.string "gender"
+    t.string "breed"
+    t.string "zone"
+    t.string "description"
+    t.boolean "finished", default: false
+    t.datetime "confirmed_at"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_missing_posts_on_user_id"
   end
 
   create_table "reported_caregivers", force: :cascade do |t|
@@ -125,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_02_234752) do
   add_foreign_key "appointments", "users"
   add_foreign_key "caregivers", "users"
   add_foreign_key "dogs", "users"
+  add_foreign_key "missing_posts", "users"
   add_foreign_key "reported_caregivers", "caregivers"
   add_foreign_key "reported_caregivers", "users"
   add_foreign_key "reported_walkers", "users"

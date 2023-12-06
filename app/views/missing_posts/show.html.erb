@@ -1,0 +1,39 @@
+<div class="modal modal-sheet position-static d-block p-0 py-md-0 my-0" tabindex="-1" role="dialog" id="modalTour">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-4">
+        <div class="text-center my-3">
+          <%= render @missing_post %>
+        </div>
+        <div class="row g-3 text-center pb-2">
+          <% if  current_user && (current_user.id == @missing_post.user_id || current_user.role == 'admin')%>
+            <% if !@missing_post.finished %>
+              <div class="col-6">
+              <%= form_with(model: @missing_post, url: confirm_missing_post_path(@missing_post), method: :patch) do |form| %>
+                <%= form.hidden_field :finished, value: true %>
+                <%= form.hidden_field :confirmed_at, value: Time.current %>
+                <%= form.submit "Apareció", class: "btn btn-success w-100" %> 
+              <% end %>
+              </div>
+              <div class="col-6">
+                <%= link_to "Editar", edit_missing_post_path(@missing_post), class: "btn btn-primary w-100"%>
+              </div>  
+              <div class="col-6">
+                <%= link_to "Eliminar", confirm_delete_missing_post_path(@missing_post), class: "btn btn-danger w-100" %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="col-6">
+            <% if !@missing_post.finished %> 
+              <%= link_to "Contactar", mp_solicitar_path(@missing_post), class: "btn btn-primary w-100"%>
+            <% end %>
+            </div>  
+          <% end %>
+          <div class="col-6">
+              <%= link_to "Volver atras", missing_posts_path, class: "btn btn-outline-secondary w-100 "%>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

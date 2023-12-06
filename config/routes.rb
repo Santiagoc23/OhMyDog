@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :missing_posts
   resources :dogs do
     member do
       get 'confirm_delete'
@@ -82,5 +83,15 @@ Rails.application.routes.draw do
 
   post 'adoption/:id/request', to: 'adoptions#solicitar'
   get 'adoption/:id/request', to: 'adoptions#solicitar', as: :solicitar
+
+  resources :missing_posts do
+    member do
+      patch 'confirm'
+      get 'confirm_delete'
+    end
+  end
+
+  post 'missing_post/:id/request', to: 'missing_posts#solicitar'
+  get 'missing_post/:id/request', to: 'missing_posts#solicitar', as: :mp_solicitar
 
 end

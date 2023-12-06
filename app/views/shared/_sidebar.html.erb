@@ -50,6 +50,12 @@
                 </li>
 
                 <li class="nav-item">
+                  <%= link_to missing_posts_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
+                        <i class="bi bi-heartbreak-fill"></i> Perros perdidos
+                    <% end %>
+                </li>
+
+                <li class="nav-item">
                   <%= link_to dogs_path, class:"nav-link d-flex align-items-center gap-2 text-dark" do %>
                       <%= image_tag("dog-solid.svg", class: "example-icon") %> 
                       <% if current_user.admin?%>

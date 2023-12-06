@@ -1,0 +1,18 @@
+<div class="card-body">
+  <h2 class="card-title mb-2"><%= missing_post.name %></h2>
+  <div class="mb-2">
+  <p> </p>
+  </div>
+  <p class="card-text"><strong>Raza: </strong><%= missing_post.breed %></p>   
+  <p class="card-text"><strong>Sexo: </strong><%= missing_post.gender %></p>
+  <p class="card-text"><strong>Tamaño: </strong><%= missing_post.size %></p>
+  <p class="card-text"><strong>Edad: </strong><%= missing_post.age %></p>
+  <p class="card-text"><strong>Se perdió por: </strong><%= missing_post.zone %> </p> 
+  <p class="card-text"><strong>Información extra: </strong><%= missing_post.description %> </p>
+  <p class="card-text"><strong>Fecha de publicación: </strong><%= missing_post.created_at.strftime("%d/%m/%Y | %H:%M") %></p>
+  <% if missing_post.finished? %>
+    <p class="card-text"><strong>Encontrado/a el dia </strong><%= missing_post.confirmed_at.strftime("%d/%m/%Y | %H:%M") %></p>
+  <% end %>
+</div>
+
+
