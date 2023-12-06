@@ -1,8 +1,9 @@
 class WalkersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_walker, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index_user, :solicitar]
+  before_action :set_walker, only: %i[ show edit update destroy]
   before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
-  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
+  before_action :only_user, only: [:reportar]
+
 
   # GET /walkers or /walkers.json
   def index
@@ -75,6 +76,8 @@ class WalkersController < ApplicationController
     @phone = user.phoneNum
     @mail = user.email
     if request.post?
+      current_user.reported_walkers << @walker
+      current_user.save
       modified_name = params[:name]
       modified_lastname = params[:lastname]
       modified_phone = params[:phone]
@@ -91,15 +94,25 @@ class WalkersController < ApplicationController
 
   def solicitar
     @walker = Walker.find(params[:id])
-    user = User.find(current_user.id)
-    @name = user.name
-    @lastname = user.surname
-    @phone = user.phoneNum
-    @mail = user.email
+    if user_signed_in?
+      user = User.find(current_user.id)
+      dni = user.dni
+      @name = user.name
+      @lastname = user.surname
+      @phone = user.phoneNum
+      @mail = user.email
+    else
+      @name = " "
+      @lastname = " "
+      @phone = " "
+      @mail = " "
+    end
 
     if request.post?
-      current_user.walkers << @walker
-      current_user.save
+      if user_signed_in?
+        current_user.walkers << @walker
+        current_user.save
+      end
       modified_name = params[:name]
       modified_lastname = params[:lastname]
       modified_phone = params[:phone]
@@ -109,7 +122,6 @@ class WalkersController < ApplicationController
       omd_notifications_mail= "vete0hmydog@gmail.com"
 
       UserMailer.walker_notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, walkmail, mensaje).deliver_later
-      dni = user.dni
       AdminMailer.walker_notify_by_email(@walker, modified_name, modified_lastname, modified_phone, modified_mail, omd_notifications_mail, mensaje, dni).deliver_later
 
       redirect_to index_user_walker_path, notice: 'Servicio solicitado exitosamente, espere el contacto a traves de su correo electrónico o teléfono!'

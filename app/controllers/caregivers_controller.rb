@@ -1,8 +1,8 @@
 class CaregiversController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_caregiver, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [:index_user, :solicitar]
+  before_action :set_caregiver, only: %i[ show edit update destroy]
   before_action :authenticate_admin, only: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
-  before_action :only_user, except: [:index, :show, :new, :edit, :create, :update, :destroy, :confirm_delete]
+  before_action :only_user, only: [:reportar]
 
   # GET /caregivers or /caregivers.json
   def index
@@ -75,6 +75,8 @@ class CaregiversController < ApplicationController
     @phone = user.phoneNum
     @mail = user.email
     if request.post?
+      current_user.reported_caregivers << @caregiver
+      current_user.save
       modified_name = params[:name]
       modified_lastname = params[:lastname]
       modified_phone = params[:phone]
@@ -91,15 +93,25 @@ class CaregiversController < ApplicationController
 
   def solicitar
     @caregiver = Caregiver.find(params[:id])
-    user = User.find(current_user.id)
-    @name = user.name
-    @lastname = user.surname
-    @phone = user.phoneNum
-    @mail = user.email
+    if user_signed_in?
+      user = User.find(current_user.id)
+      dni = user.dni
+      @name = user.name
+      @lastname = user.surname
+      @phone = user.phoneNum
+      @mail = user.email
+    else
+      @name = " "
+      @lastname = " "
+      @phone = " "
+      @mail = " "
+    end
 
     if request.post?
-      current_user.caregivers << @caregiver
-      current_user.save
+      if user_signed_in?
+        current_user.caregivers << @caregiver
+        current_user.save
+      end
       modified_name = params[:name]
       modified_lastname = params[:lastname]
       modified_phone = params[:phone]
@@ -109,7 +121,6 @@ class CaregiversController < ApplicationController
       omd_notifications_mail= "vete0hmydog@gmail.com"
 
       UserMailer.caregiver_notify_by_email(modified_name, modified_lastname, modified_phone, modified_mail, caremail, mensaje).deliver_later
-      dni = user.dni
       AdminMailer.caregiver_notify_by_email(@caregiver, modified_name, modified_lastname, modified_phone, modified_mail, omd_notifications_mail, mensaje, dni).deliver_later
 
       redirect_to index_user_caregiver_path, notice: 'Servicio solicitado exitosamente, espere el contacto a traves de su correo electrónico o teléfono!'

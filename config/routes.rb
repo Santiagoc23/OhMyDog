@@ -60,6 +60,8 @@ Rails.application.routes.draw do
 
   patch 'appointments/:id/confirm_admin_edit', to: 'appointments#confirm_admin_edit', as: 'confirm_admin_edit'
 
+  patch 'confirmed/:id/remove_cancel', to: 'appointments#remove_cancel', as: 'remove_cancel'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/:id/confirm_cancel', to: 'appointments#confirm_cancel', as: :confirm_cancel_appointment
   get '/:id/edit', to: 'appointments#edit', as: :edit__appointment

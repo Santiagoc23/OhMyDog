@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_150336) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_234752) do
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
     t.string "race"
@@ -65,6 +65,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_150336) do
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
+  create_table "reported_caregivers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "caregiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["caregiver_id"], name: "index_reported_caregivers_on_caregiver_id"
+    t.index ["user_id"], name: "index_reported_caregivers_on_user_id"
+  end
+
+  create_table "reported_walkers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "walker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reported_walkers_on_user_id"
+    t.index ["walker_id"], name: "index_reported_walkers_on_walker_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -107,6 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_150336) do
   add_foreign_key "appointments", "users"
   add_foreign_key "caregivers", "users"
   add_foreign_key "dogs", "users"
+  add_foreign_key "reported_caregivers", "caregivers"
+  add_foreign_key "reported_caregivers", "users"
+  add_foreign_key "reported_walkers", "users"
+  add_foreign_key "reported_walkers", "walkers"
   add_foreign_key "users", "caregivers"
   add_foreign_key "users", "walkers"
   add_foreign_key "walkers", "users"

@@ -10,14 +10,13 @@
         <div class="row g-3 text-center pb-2">   
           <div class="col-12">     
             <% if @appointment.state != 3 %> <!-- NO PUEDE CONFIRMAR LOS MISMOS DE LA VETERINARIA-->
-              <%= form_with(model: @appointment, url: confirm_user_edit_path(@appointment), method: :patch) do |form| %>
-                <%= form.hidden_field :state, value: 1 %>
-                <%= form.submit "Confirmar turno", class: "btn btn-primary w-100"%>
-              <% end %>
+              <%= button_to "Confirmar turno", confirm_user_edit_path(@appointment), method: :patch, class: "btn btn-primary w-100" %>
             <% end %>
           </div>
           <div class="col-12">
-            <%= link_to "Reprogramar solicitud", edit_appointment_path(@appointment, source: "request"), class: "btn btn-outline-primary w-100"%>
+            <% if @appointment.state != 2 %> <!-- NO PUEDE REPROGRAMAR EN REPROG-->
+              <%= link_to "Reprogramar solicitud", edit_appointment_path(@appointment, source: "request"), class: "btn btn-outline-primary w-100"%>
+            <% end %>
           </div>
           <div class="col-12">
               <%= link_to "Cancelar turno", confirm_cancel_appointment_path(@appointment, source: "cancel_from_request"), class: "btn btn-danger w-100" %> 

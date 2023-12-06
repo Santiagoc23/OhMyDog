@@ -18,7 +18,11 @@
         <% when 3 %>
           Veterinaria quiere reprogramar 
         <% when 4 %>
-          Veterinaria canceló el turno
+          Cancelado
+        <% when 5 %> <!-- ESTE CONFIRMADO ES PARA BLOQUEAR QUE SE REPROGRAME MAS DE 1 VEZ -->
+          Confirmado
+        <% when 44 %>
+          Cancelado
         <% else %>
           <%= "Ocurrió un error recuperando el estado del turno." %>
       <% end %>
@@ -31,8 +35,8 @@
        <p><strong>Turno para: </strong> <%= appointment.dog.name %></p>
     <% end %>
     
-    <% if current_user.role == 'user' %>
-      <p><strong>Mensaje de la veterinaria:</strong> <%= appointment.message %></p>
+    <% if !appointment.message.empty? %>
+      <p><strong>Mensaje:</strong> <%= appointment.message %></p>
     <% end %>   
   </div>
 </div>
