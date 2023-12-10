@@ -76,3 +76,6 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+gem 'ffi'
+gem 'mercadopago-sdk', '~> 2.2', '>= 2.2.1'
+gem 'dotenv-rails', groups: [:development, :test]

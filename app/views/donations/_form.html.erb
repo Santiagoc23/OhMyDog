@@ -1,0 +1,55 @@
+<div class=""> 
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <div class="col-md-7 col-lg-8">
+        <%= form_with(model: donation) do |form| %>
+          <div class="row g-3">
+            <div class="col-12">
+              <%= form.label :Titulo, class:"form-label" %>
+              <%= form.text_field :title, autofocus: true, autocomplete: "title", class:"form-control", placeholder:"", required: "required"%>
+            </div>
+
+            <div class="col-12">
+              <%= form.label :"Descripción", class:"form-label" %>
+              <%= form.text_field :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"", required: "required"%>
+            </div>
+                  
+            <div class="col-sm-6">
+              <%= form.label :'Fecha_limite', class:"form-label" %>
+              <%= form.date_field :closing_date, class: "form-control form-control-inline" %> 
+            </div>
+              
+            <div class="col-sm-6">
+              <%= form.label :'Monto objetivo', class:"form-label" %>
+              <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <%= form.text_field :target_amount, autofocus: true, autocomplete: "target_amount", class: "form-control", aria_label: "Amount (to the nearest dollar)" %>
+              </div>
+            </div>
+
+            <hr class="my-2">
+
+            <% if @donation.errors.any? %>
+              <div class="alert alert-danger w-100" role="alert">
+                <ul class="list-unstyled">
+                  <% @donation.errors.each do |error| %>
+                    <li><%= error.message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            
+            <div class="col-sm-6">
+              <%= form.submit "Cargar campaña", class:"w-100 btn btn-primary" %>
+            </div>
+
+            <div class="col-sm-6">
+              <%= link_to "Volver atras", donations_path, class: "btn btn-outline-secondary w-100"%>
+            </div>
+          </div>    
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container-fluid mt-4 px-2">
+  <div class="modal modal-sheet position-static d-block p-4 py-md-2" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header border-bottom-0">
+          <h2 class="modal-title fs-5 ">Confirmar donación</h2>
+        </div>
+        <div class="modal-body py-0">
+            <p>Tu donación sera a <%= @donation_title %> con un monto de $<%= @amount %></p>
+        </div>
+        <div class="modal-footer flex-column align-items-stretch w-100 pb-3 border-top-0">
+          <%= link_to "Pagar a través de MercadoPago", "javascript:void(0);", class: "btn btn-primary", id: "mercadoPagoLink" %>
+          <script>
+            document.getElementById("mercadoPagoLink").addEventListener("click", function() {
+              // Abre la ventana externa de MercadoPago
+              window.open("<%= @sandbox_init_point %>", "_blank");
+
+              // Redirige a la página de índice del controlador donations después de un breve retraso
+              setTimeout(function() {
+                window.location.href = "<%= donations_path %>";
+              }, 100);
+            });
+          </script>
+          <%= link_to "Cancelar", donations_path, class:"btn btn-outline-danger" %>
+        </div>     
+      </div>
+    </div>
+  </div>
+</div>

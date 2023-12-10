@@ -1,0 +1,6 @@
+<div class="card-body">
+  <h5 class="card-title  text-center"><%= donation.title %></h5>
+  <hr>
+  <p class="card-text"><strong>Descripcion: </strong><%= donation.description %></p>   
+  <p class="card-text"><strong>Fecha limite: </strong><%= donation.closing_date.strftime('%d/%m/%Y') %></p>
+  <p  class="card-text"><strong>Monto a alcanzar: </strong> <%= number_to_currency(donation.target_amount, separator: ',', delimiter: '.') %>

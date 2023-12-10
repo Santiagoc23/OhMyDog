@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :dogs do
+  resources :donations do
+    post 'donate', on: :collection
+    member do
+      get 'confirm_donate'
+      get 'confirm_delete'
+    end
+  end
+  resources :dogs do  
     member do
       get 'confirm_delete'
     end
