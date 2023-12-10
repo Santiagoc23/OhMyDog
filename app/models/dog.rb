@@ -8,8 +8,6 @@ class Dog < ApplicationRecord
   validate :birthdate_cannot_be_in_the_future
   validate :user_must_exist
 
-  private
-
   def birthdate_cannot_be_in_the_future
     if birthdate.present? && birthdate > Date.current
       errors.add(:birthdate, "No se puede ingresar una fecha posterior a la actual.")

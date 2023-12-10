@@ -99,6 +99,14 @@ class AppointmentsController < ApplicationController
       @appointment.update(state: 1)
       redirect_to requests_path
       flash[:notice] = "Turno confirmado"
+      vacuna = Vacuna.new(
+        fechaAct: @appointment.time,
+        tipoVacuna: @appointment.query_type,
+        dog_id: @appointment.dog_id,
+      )
+      vacuna.save
+      vacuna
+      redirect_to appointments_path
     else
       redirect_to dashboard_home_path
     end
@@ -108,6 +116,13 @@ class AppointmentsController < ApplicationController
     if current_user.role == 'user'
       @appointment = Appointment.find(params[:id])
       @appointment.update(state: 1)
+      vacuna = Vacuna.new(
+        fechaAct: @appointment.time,
+        tipoVacuna: @appointment.query_type,
+        dog_id: @appointment.dog_id,
+      )
+      vacuna.save
+      vacuna
       redirect_to appointments_path
     else
       redirect_to dashboard_home_path

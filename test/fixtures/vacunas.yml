@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fechaAct: 2023-12-07
+  tipoVacuna: MyText
+  peso: 1
+  enfermedad: MyText
+  dosis: 1
+  medicacion: MyText
+  fechaProx: 2023-12-07
+
+two:
+  fechaAct: 2023-12-07
+  tipoVacuna: MyText
+  peso: 1
+  enfermedad: MyText
+  dosis: 1
+  medicacion: MyText
+  fechaProx: 2023-12-07

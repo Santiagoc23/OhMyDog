@@ -1,0 +1,17 @@
+<%= form_with(model: medical_story) do |form| %>
+  <% if medical_story.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(medical_story.errors.count, "error") %> prohibited this medical_story from being saved:</h2>
+
+      <ul>
+        <% medical_story.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
