@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_12_10_164437) do
+
   create_table "adoptions", force: :cascade do |t|
     t.string "name"
     t.string "race"
@@ -87,6 +88,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_10_164437) do
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
+  create_table "donations", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "closing_date"
+    t.decimal "target_amount"
+    t.decimal "amount"
+  end
+  
   create_table "health_records", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

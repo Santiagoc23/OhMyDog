@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :donations do
+    post 'donate', on: :collection
+    member do
+      get 'confirm_donate'
+      get 'confirm_delete'
+    end
+  end
+
 
   resources :vacunas, only: [:new, :create, :edit, :edit2, :update, :destroy] do
     member do
