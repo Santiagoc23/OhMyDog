@@ -1,0 +1,68 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Perros perdidos</h2>
+  <hr>
+  <% if user_signed_in? == false %>
+    <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to "Publicar perro perdido", new_missing_post_path, class:"btn btn-primary px-3 mb-2"%>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  
+<div class="my-3" id="appointments">
+    <div class="row">
+      <% if @missing_posts.present? %>
+        <% @missing_posts.each do |missing_post| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+              <div class="card">
+                  <div class="card-body text-center">
+                      <h5 class="card-title display-6 font-weight-bold p-1"><%= missing_post.name %></h5>
+                      <% if missing_post.image.attached? %>
+                        <%= image_tag(missing_post.image, size: '200x200') %>
+                      <% end %>
+                      <% if missing_post.finished? %>
+                        <p class="card-text fs-5">¡ENCONTRADO!</p>
+                        <p class="card-text"><strong>Se habia perdido por: </strong><%= missing_post.zone %> </p>
+                      <% else %>
+                        <p class="card-text fs-5"><%= missing_post.breed %></p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text"><strong>Sexo: </strong><%= missing_post.gender %></p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text"><strong>Edad: </strong><%= missing_post.age %></p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text"><strong>Tamaño: </strong><%= missing_post.size %></p>
+                            </div>
+                        </div>
+                        <p> </p>
+                        <p class="card-text"><strong>Se perdió por: </strong><%= missing_post.zone %> </p>
+                        <p class="card-text"><strong>Información extra: </strong><%= missing_post.description %> </p>
+                      <% end %>
+                  </div>
+
+                  <div class="card-body">
+                      <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#show_request">
+                          <%= link_to "VER MAS  ", missing_post, class:"text-white text-decoration-none pe-2"%>
+                          <i class="bi bi-plus-circle align-items-center mx-1"></i>
+                      </button>
+                  </div>
+              </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No hay perros perdidos subidos a la aplicación en este momento.</p>
+        </div>
+      <% end %>
+    </div>
+</div>   

@@ -19,7 +19,6 @@
     <p class="text-muted"><%= message= 'Desde OhMyDog sabemos lo mucho que quiere a su mascota ¡Es parte de la familia! y es por eso mismo que, CADA PASEADOR/A presente en este listado es previamente ESTUDIADO Y ELEGIDO cuidadosamente por nosotros con la intención de ofrecerle a usted el mejor servicio posible para su amigo peludo.' %></p>
     <div class="row">
       <% if @walkers.present? %>
-        <%user= User.find(current_user.id)%>
         <% @walkers.each do |walker| %>
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
             <div class="card">
@@ -31,9 +30,14 @@
               </div>
               <div class="card-footer">
                 <div class="d-flex justify-content-between">
-                  <%= link_to "Contactar", solicitar_paseador_path(walker), class: "btn btn-primary w-20"%>
-                  <% if current_user.walkers.include?(walker) %>
-                    <%= link_to "Reportar", reportar_paseador_path(walker), class: "btn btn-danger"%>
+                  <% if !user_signed_in?%>
+                    <%= link_to "Contactar", solicitar_paseador_path(walker), class: "btn btn-primary w-20"%>
+                  <% elsif current_user.walkers.include?(walker) %>
+                    <% unless current_user.reported_walkers.include?(walker) %>
+                      <%= link_to "Reportar", reportar_paseador_path(walker), class: "btn btn-danger" %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to "Contactar", solicitar_paseador_path(walker), class: "btn btn-primary w-20"%>
                   <% end %>
                 </div>
               </div>

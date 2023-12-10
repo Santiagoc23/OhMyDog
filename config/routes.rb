@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  resources :missing_posts
   resources :donations do
     post 'donate', on: :collection
     member do
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
   
   resources :medical_stories do
   end
+
   resources :dogs do
     member do
       get 'confirm_delete'
@@ -99,6 +102,8 @@ Rails.application.routes.draw do
 
   patch 'appointments/:id/confirm_admin_edit', to: 'appointments#confirm_admin_edit', as: 'confirm_admin_edit'
 
+  patch 'confirmed/:id/remove_cancel', to: 'appointments#remove_cancel', as: 'remove_cancel'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/:id/confirm_cancel', to: 'appointments#confirm_cancel', as: :confirm_cancel_appointment
   get '/:id/edit', to: 'appointments#edit', as: :edit__appointment
@@ -119,5 +124,15 @@ Rails.application.routes.draw do
 
   post 'adoption/:id/request', to: 'adoptions#solicitar'
   get 'adoption/:id/request', to: 'adoptions#solicitar', as: :solicitar
+
+  resources :missing_posts do
+    member do
+      patch 'confirm'
+      get 'confirm_delete'
+    end
+  end
+
+  post 'missing_post/:id/request', to: 'missing_posts#solicitar'
+  get 'missing_post/:id/request', to: 'missing_posts#solicitar', as: :mp_solicitar
 
 end

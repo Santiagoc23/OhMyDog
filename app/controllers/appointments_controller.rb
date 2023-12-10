@@ -16,7 +16,7 @@ class AppointmentsController < ApplicationController
     if current_user.admin?
       Appointment.where("time < ?", DateTime.now).destroy_all
       #@appointments = Appointment.order(:time)
-      @appointments = Appointment.where.not(state: [1, 4]).order(time: :asc)
+      @appointments = Appointment.where.not(state: [1, 4, 5]).order(time: :asc)
 
       @ux1= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 0).count
       @ux2= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 2).count
@@ -43,7 +43,7 @@ class AppointmentsController < ApplicationController
       @ux4= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 2, 1).count
       @ux5= Appointment.where("DATE(time) = ? AND state = ?", Date.tomorrow + 3, 1).count
 
-      @appointments = Appointment.where(state: [1]).order(time: :asc)
+      @appointments = Appointment.where(state: [1, 5, 4]).order(time: :asc)
     else
       redirect_to dashboard_home_path
     end
@@ -96,7 +96,11 @@ class AppointmentsController < ApplicationController
   def confirm_user_edit
     if current_user.admin?
       @appointment = Appointment.find(params[:id])
-      @appointment.update(state: 1)
+      if @appointment.state == 0
+        @appointment.update(state: 1)
+      else
+        @appointment.update(state: 5)
+      end
       redirect_to requests_path
       flash[:notice] = "Turno confirmado"
       vacuna = Vacuna.new(
@@ -115,7 +119,7 @@ class AppointmentsController < ApplicationController
   def confirm_admin_edit
     if current_user.role == 'user'
       @appointment = Appointment.find(params[:id])
-      @appointment.update(state: 1)
+      @appointment.update(state: 5)
       vacuna = Vacuna.new(
         fechaAct: @appointment.time,
         tipoVacuna: @appointment.query_type,
@@ -129,12 +133,14 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  def remove_cancel
+    @appointment = Appointment.find(params[:id])
+    @appointment.update(state: 44)
+    redirect_to confirmed_path
+  end
+
   def confirm_cancel
-    if current_user.admin?
-      @from = params[:source]
-    else
-      redirect_to dashboard_home_path
-    end
+    @from = params[:source]
   end
 
   # GET /appointments/new
@@ -155,7 +161,7 @@ class AppointmentsController < ApplicationController
   def create
     @appointment = Appointment.new(appointment_params)
     @appointment.user_id = current_user.id
-    #@appointment.dog_id = (@appointment.dog_id == 0) ? nil : @appointment.dog_id
+    @appointment.dog_id = (@appointment.dog_id == 0) ? nil : @appointment.dog_id
 
     respond_to do |format|
       if @appointment.save
@@ -192,48 +198,55 @@ class AppointmentsController < ApplicationController
           format.html { redirect_to confirmed_path, notice: "Turno actualizado, en espera de confirmación." }
           format.json { render :show, status: :ok, location: @appointment }
         else
-          @appointment.state= ant #vuelve al estado anterior porque algo salió mal
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @appointment.errors, status: :unprocessable_entity }
         end
 
-        when "user"
-          if @appointment.state == 1 || @appointment.state == 3
-            @appointment.state = 2
-          end
-
-          if @appointment.update(appointment_params)
-            format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, en espera de confirmación." }
-            format.json { render :show, status: :ok, location: @appointment }
-          else
-            @source = params[:appointment][:source]
-            format.html { render :edit, status: :unprocessable_entity }
-            format.json { render json: @appointment.errors, status: :unprocessable_entity }
-          end
-
-        when "cancel_from_request"
-          @appointment.state = 4
-          @appointment.update(appointment_params)
-          format.html { redirect_to requests_path, notice: "Turno cancelado." }
-
-        when "cancel_from_confirmed"
-          @appointment.state = 4
-          @appointment.update(appointment_params)
-          format.html { redirect_to confirmed_path, notice: "Turno cancelado." }
+      when "user"
+        if @appointment.state == 1 || @appointment.state == 3
+          @appointment.state = 2
         end
+        modified_params = appointment_params
+        modified_params[:dog_id] = nil if modified_params[:dog_id].to_i == 0
+
+        if @appointment.update(modified_params)
+          format.html { redirect_to appointment_url(@appointment), notice: "Turno actualizado, en espera de confirmación." }
+          format.json { render :show, status: :ok, location: @appointment }
+        else
+          @source = params[:appointment][:source]
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @appointment.errors, status: :unprocessable_entity }
+        end
+
+      when "cancel_from_user"
+        if @appointment.state == 1
+          @appointment.state = 4 #aparece en el listado de confirmados
+        else
+          @appointment.state = 44 #no aparece pq no estaba confirmado
+        end
+        @appointment.update(appointment_params)
+        format.html { redirect_to appointments_path, notice: "Turno cancelado." }
+
+      when "cancel_from_request"
+        @appointment.state = 4
+        @appointment.update(appointment_params)
+        format.html { redirect_to requests_path, notice: "Turno cancelado." }
+
+      when "cancel_from_confirmed"
+        @appointment.state = 4
+        @appointment.update(appointment_params)
+        format.html { redirect_to confirmed_path, notice: "Turno cancelado." }
+      end
+
     end
   end
 
   # DELETE /appointments/1 or /appointments/1.json
   def destroy
-    if current_user.role == 'user'
-      @appointment.destroy
-      respond_to do |format|
-        format.html { redirect_to appointments_url, notice: "Turno eliminado." }
-        format.json { head :no_content }
-      end
-    else
-      redirect_to dashboard_home_path
+    @appointment.destroy
+    respond_to do |format|
+      format.html { redirect_to appointments_url, notice: "Turno eliminado." }
+      format.json { head :no_content }
     end
   end
 
@@ -249,8 +262,8 @@ class AppointmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def appointment_params
-      modified_params = params.require(:appointment).permit(:time, :state, :message, :user_id, :query_type, :dog_id)
-      modified_params[:dog_id] = nil if modified_params[:dog_id].to_i == 0
-      modified_params
+      params.require(:appointment).permit(:time, :state, :message, :user_id, :query_type, :dog_id)
     end
+
+
 end

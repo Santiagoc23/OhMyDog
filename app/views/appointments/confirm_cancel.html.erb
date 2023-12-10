@@ -11,10 +11,13 @@
           <%= link_to "Volver atras", confirmed_path, class:"btn btn-secondary" %>
         <% elsif params[:source] == "cancel_from_request" %>
           <%= link_to "Volver atras", requests_path, class:"btn btn-secondary" %>
+        <% elsif params[:source] == "cancel_from_user" %>
+          <%= link_to "Volver atras", @appointment, class:"btn btn-outline-secondary" %> 
         <% end %>
         </div>   
       </div>
     </div>
   </div>
 </div>
+
 

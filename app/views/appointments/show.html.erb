@@ -7,29 +7,33 @@
           <%= render @appointment %>
         </div>
         <div class="row g-3 text-center pb-2">
-          <!-- SI ESTA REPROG POR LA VT MUESTRA PARA CONFIRMAR-->
+          <!-- SI ESTA REPROG POR LA VT MUESTRA PARA CONFIRMAR O CANCELAR-->
           <% if @appointment.state == 3 %>
             <%= form_with(model: @appointment, url: confirm_admin_edit_path(@appointment), method: :patch, local: true) do |form| %>
-              <%= form.hidden_field :state, value: 1 %>
+              <%= form.hidden_field :state, value: 5 %> 
               <%= form.submit "Confirmar reprogramación", class: "btn btn-primary w-100"%> 
             <% end %>
           <% end %> 
 
-          <!-- SI NO ESTA CANCELADO MUESTRA PARA EDITAR Y UN ELIMINAR CON CONFIRMACION-->
-          <% if @appointment.state != 4 %>
+          <!-- SOLO MUESTRA PARA EDITAR SI NO ESTA YA EDITADO X LA OTRA PARTE, SI NO ESTA CANCELADO, NI DEFINITIVAMENTE CONFIRM-->
+          <% if ![3, 4, 44, 5].include?(@appointment.state) %>
             <div class="col-12">
               <%= link_to "Reprogramar turno", edit_appointment_path(@appointment, source: "user"), class: "btn btn-primary w-100"%>
             </div>
+          <% end %> 
+
+          <!-- SI NO ESTA CANCELADO MUESTRA PARA CANCELAR-->
+          <% if ![0, 4, 44].include?(@appointment.state) %>
             <div class="col-12">
+              <%= link_to "Cancelar turno", confirm_cancel_appointment_path(@appointment, source: "cancel_from_user"), class: "btn btn-danger w-100" %> 
+            </div>
+          <!-- SI ES SOLICITUD O ESTA CANCELADO PARA ELIMINAR-->
+          <% elsif @appointment.state==0 %> 
+            <div class="col-12"> 
               <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment), class: "btn btn-danger w-100" %> 
             </div>
-          <% end %> 
-          
-          <!-- SI ESTA CANCELADO POR LA VT MUESTRA PARA BORRAR DE UNA-->
-          <div class="col-12"> 
-          <% if @appointment.state == 4%>
-            <%= link_to "Eliminar turno", confirm_delete_appointment_path(@appointment), class: "btn btn-danger w-100" %> 
           <% end %>
+
           </div>
           <div class="col-12"> 
             <%= link_to "Volver atras", appointments_path, class: "btn btn-outline-secondary w-100 "%>
