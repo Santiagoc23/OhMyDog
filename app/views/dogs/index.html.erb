@@ -45,7 +45,9 @@
           <div class="card">
             <%= render dog %>
             <div class="text-center">
-              <%= link_to "Ver mas", dog, class:"btn btn-outline-secondary" %>
+            <%= link_to "Ver mas", dog, class:"btn btn-outline-secondary" %>
+            <%= link_to "Historia clínica", medical_stories_path(dog_id: dog.id), class:"btn btn-outline-secondary" %>
+            <%= link_to "Libreta canina", health_records_path(dog_id: dog.id), class:"btn btn-outline-secondary" %>
             </div>
             </div>
           </div>

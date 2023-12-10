@@ -65,7 +65,7 @@ class DogsController < ApplicationController
   def update
     respond_to do |format|
       if @dog.update(dog_params)
-        format.html { redirect_to dog_url(@dog), notice: "Dog was successfully updated." }
+        format.html { redirect_to dog_url(@dog), notice: "El perro se ha actualizado con éxito." }
         format.json { render :show, status: :ok, location: @dog }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -96,9 +96,9 @@ class DogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dog_params
-      params.require(:dog).permit(:name, :breed, :gender, :birthdate,:age, :dni)
+      params.require(:dog).permit(:name, :dni, :breed, :gender, :birthdate, :age)
     end
-
+    
     def calculate_birthdate
       age = params[:dog][:age].to_i
       @dog.birthdate = Date.current - age.years

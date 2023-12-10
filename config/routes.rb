@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+
+  resources :vacunas, only: [:new, :create, :edit, :edit2, :update, :destroy] do
+    member do
+      get 'confirm_delete'
+      get 'confirm_delete2'
+      get 'edit2'
+      post 'edit2'
+      post 'new'
+    end
+  end
+
+  get '/download_HistoriaClinica/:dog_id(.:format)', to: 'medical_stories#downloadHC', as: 'download_historia_clinica', defaults: { format: :pdf }
+  get '/download_LibretaSanitaria/:dog_id(.:format)', to: 'health_records#downloadLS', as: 'download_libreta_sanitaria', defaults: { format: :pdf }
+
+  resources :health_records do
+  end
+  
+  resources :medical_stories do
+  end
   resources :dogs do
     member do
       get 'confirm_delete'
@@ -47,6 +66,18 @@ Rails.application.routes.draw do
   get 'u/walkers/:id/request', to: 'walkers#solicitar', as: :solicitar_paseador
   post 'u/walkers/:id/report', to: 'walkers#reportar'
   get 'u/walkers/:id/report', to: 'walkers#reportar', as: :reportar_paseador
+
+  resources :medical_story do
+    member do
+      get 'confirm_delete'
+    end
+  end
+
+  resources :health_record do
+    member do
+      get 'confirm_delete'
+    end
+  end
 
   # Rutas turnos "Santi"
 

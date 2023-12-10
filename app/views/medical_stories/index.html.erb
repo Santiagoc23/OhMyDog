@@ -1,0 +1,57 @@
+
+<div class="container-fluid mt-4 px-2">
+<h2>Historia clinica canina</h2>
+<hr>
+<p class="fs-6" style="background-color: blue; color: white; padding: 5px; display: inline-block; border-radius: 5px;">
+  <strong>Datos del perro</strong>
+</p>
+
+<br>
+<strong>Nombre: </strong><%= @dogData.name %></p> 
+<strong>Raza: </strong><%= @dogData.breed %></p>   
+<strong>Sexo: </strong><%= @dogData.gender %></p>
+<strong>Edad: </strong><%= @dogData.age %></p> 
+<strong>Fecha de nacimiento: </strong><%= @dogData.birthdate.strftime('%d/%m/%Y') %></p>
+<% if current_user.admin? %>
+  <%= link_to "Editar perro", edit_dog_path(@dogData.id), class: "btn btn-warning px-3 mb-2" %>
+<% end %>
+<hr>
+
+<p class="fs-6" style="background-color: blue; color: white; padding: 5px; display: inline-block; border-radius: 5px;">
+  <strong>Consultas</strong>
+</p>
+
+<table style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="border: 1px solid #ddd; background-color: #f2f2f2;">
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha de consulta</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Tipo de consulta</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Peso de <%= @dogData.name %></th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Descripcion de la consulta</th>
+      <% if current_user.admin? %>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Edición</th>
+      <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Eliminación</th>
+    <% end %>
+    
+    </tr>
+    </thead>
+    <tbody>
+      <% @vacunasDog.each do |vacuna| %> 
+          <tr style="border: 1px solid #ddd;">
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.fechaAct.strftime('%Y-%m-%d') %></td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.tipoVacuna %></td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.peso %>kg</td>
+            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.description%></td>
+            <% if current_user.admin? %>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= link_to "Editar", edit2_vacuna_path(vacuna.id), class: "btn btn-warning px-3" %></td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= link_to "Eliminar", confirm_delete2_vacuna_path(vacuna.id), class: "btn btn-danger w-100" %></td>
+            <% end %>
+          </tr>
+      <% end %>
+    </tbody>
+    </table>
+<br>
+<%= link_to "Exportar", download_historia_clinica_path(@dogData.id, format: :pdf), class: "btn btn-primary px-3 mb-2" %>
+<% if current_user.admin? %>
+<%= link_to "Agregar consulta", new_vacuna_path(dog_id: @dogData.id, age: @dogData.age), class: "btn btn-primary px-3 mb-2" %>
+<% end %>
