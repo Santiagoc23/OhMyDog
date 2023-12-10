@@ -8,11 +8,14 @@ gem "rails", "~> 7.0.8"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-
+gem 'pdfkit'
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
-
 # Use the Puma web server [https://github.com/puma/puma]
+
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 gem "puma", "~> 5.0"
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
@@ -79,3 +82,5 @@ gem "devise", "~> 4.9"
 gem 'ffi'
 gem 'mercadopago-sdk', '~> 2.2', '>= 2.2.1'
 gem 'dotenv-rails', groups: [:development, :test]
+gem "prawn", "~> 2.4"
+
