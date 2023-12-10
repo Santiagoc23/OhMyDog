@@ -16,7 +16,7 @@ class AppointmentsController < ApplicationController
     if current_user.admin?
       Appointment.where("time < ?", DateTime.now).destroy_all
       #@appointments = Appointment.order(:time)
-      @appointments = Appointment.where.not(state: [1, 4, 5]).order(time: :asc)
+      @appointments = Appointment.where.not(state: [1, 4, 5, 44]).order(time: :asc)
 
       @ux1= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 0).count
       @ux2= Appointment.where("DATE(time) = ? AND state = ?", Date.today, 2).count

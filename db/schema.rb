@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_10_164437) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -81,26 +81,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
     t.index ["user_id"], name: "index_caregivers_on_user_id"
   end
 
-  create_table "consulta", force: :cascade do |t|
-    t.date "fecha"
-    t.text "tipoConsulta"
-    t.integer "peso"
-    t.text "descripcion"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "consultaperros", force: :cascade do |t|
-    t.date "fecha"
-    t.text "tipoConsulta"
-    t.integer "peso"
-    t.text "descripcion"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "dog_id", null: false
-    t.index ["dog_id"], name: "index_consultaperros_on_dog_id"
-  end
-
   create_table "dogs", force: :cascade do |t|
     t.string "name"
     t.string "breed"
@@ -110,9 +90,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "vacunas_created"
-    t.boolean "consultas_created"
     t.index ["user_id"], name: "index_dogs_on_user_id"
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "closing_date"
+    t.decimal "target_amount"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "health_records", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "medical_stories", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "missing_posts", force: :cascade do |t|
@@ -149,24 +147,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
     t.index ["user_id"], name: "index_reported_walkers_on_user_id"
     t.index ["walker_id"], name: "index_reported_walkers_on_walker_id"
   end
-  
-  create_table "donations", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.date "closing_date"
-    t.decimal "target_amount"
-    t.decimal "amount"
-  end
-  
-  create_table "health_records", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "medical_stories", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -191,19 +171,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
     t.index ["walker_id"], name: "index_users_on_walker_id"
   end
 
-  create_table "vaccines", force: :cascade do |t|
-    t.date "day"
-    t.text "type"
-    t.integer "size"
-    t.text "illness"
-    t.integer "doses"
-    t.text "medicine"
-    t.date "nextDay"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "vacunas", force: :cascade do |t|
+    t.integer "dog_id"
     t.date "fechaAct"
     t.text "tipoVacuna"
     t.integer "peso"
@@ -213,8 +182,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
     t.date "fechaProx"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "dog_id"
-    t.boolean "created_once", default: false
     t.text "description"
     t.integer "age"
     t.index ["dog_id"], name: "index_vacunas_on_dog_id"
@@ -240,7 +207,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_223330) do
   add_foreign_key "appointments", "dogs"
   add_foreign_key "appointments", "users"
   add_foreign_key "caregivers", "users"
-  add_foreign_key "consultaperros", "dogs"
   add_foreign_key "dogs", "users"
   add_foreign_key "missing_posts", "users"
   add_foreign_key "reported_caregivers", "caregivers"

@@ -16,7 +16,6 @@ Rails.application.routes.draw do
       get 'confirm_delete2'
       get 'edit2'
       post 'edit2'
-      post 'new'
     end
   end
 

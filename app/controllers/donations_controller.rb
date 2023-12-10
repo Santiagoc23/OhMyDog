@@ -29,7 +29,7 @@ class DonationsController < ApplicationController
 
     respond_to do |format|
       if @donation.save
-        format.html { redirect_to donation_url(@donation), notice: "Donation was successfully created." }
+        format.html { redirect_to donation_url(@donation), notice: "La publicación de donación se creó con éxito." }
         format.json { render :show, status: :created, location: @donation }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class DonationsController < ApplicationController
   def update
     respond_to do |format|
       if @donation.update(donation_params)
-        format.html { redirect_to donation_url(@donation), notice: "Donation was successfully updated." }
+        format.html { redirect_to donation_url(@donation), notice: "La publicación donación se actualizó correctamente." }
         format.json { render :show, status: :ok, location: @donation }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class DonationsController < ApplicationController
     @donation.destroy
 
     respond_to do |format|
-      format.html { redirect_to donations_url, notice: "Donation was successfully destroyed." }
+      format.html { redirect_to donations_url, notice: "La publicación de donación fue eliminada con éxito." }
       format.json { head :no_content }
     end
   end

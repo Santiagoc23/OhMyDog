@@ -1,52 +1,54 @@
-<h2>Nueva consulta</h2>
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-7 col-lg-8">
-    <%= form_with(model: @vacuna) do |form| %>
-      <%= form.hidden_field :dog_id, value: params[:dog_id] %>
-      <%= form.hidden_field :age, value: params[:age] %>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <%= form.label :'Fecha de consulta', class:"form-label" %>
-            <%= form.date_field :fechaAct, class:"form-control", id: "fecha" %>
-          </div>
+<div class="container-fluid py-3">
+  <h2>Nueva consulta</h2>
+  <hr>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-8">
+      <%= form_with(model: @vacuna) do |form| %>
+        <%= form.hidden_field :dog_id, value: params[:dog_id] %>
+        <%= form.hidden_field :age, value: params[:age] %>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <%= form.label :'Fecha de consulta', class:"form-label" %>
+              <%= form.date_field :fechaAct, class:"form-control", id: "fecha" %>
+            </div>
 
-          <div class="col-md-6">
-            <%= form.label :'Tipo de consulta', class:"form-label" %>
-            <br>
-            <%= form.select :tipoVacuna, options_for_select(['Consulta general', 'Urgencias', 'Castración', 'Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)'], { prompt: 'Seleccione el tipo de consulta' }), { class: 'form-select form-control', required: 'required', id: 'tipoConsulta' } %>
-          </div>
+            <div class="col-md-6">
+              <%= form.label :'Tipo de consulta', class:"form-label" %>
+              <%= form.select :tipoVacuna, options_for_select(['Consulta general', 'Urgencias', 'Castración', 'Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)']), { prompt: 'Seleccione el tipo de consulta' }, { class: 'form-select', required: 'required', id: 'tipoConsulta' } %>
+            </div>
 
-          <div class="col-md-6">
-            <%= form.label :'Peso (en kg)', class:"form-label" %>
-            <%= form.number_field :peso, min:1, class:"form-control" %>
-          </div>
+            <div class="col-md-6">
+              <%= form.label :'Peso (en kg)', class:"form-label" %>
+              <%= form.number_field :peso, min:1, class:"form-control" %>
+            </div>
 
-          <div class="col-md-6">
-          <%= form.label :'Descripción de la consulta', class:"form-label" %>
-          <%= form.text_field :description, autofocus: true, autocomplete: "descripcion", class:"form-control", placeholder:"", value:"" %>
-        </div>
-        <hr>
-
-        <% if @vacuna.errors.any? %>
-        <div class="alert alert-danger flex-column align-items-stretch w-100" role="alert">
-          <ul class="list-unstyled">
-            <% @vacuna.errors.each do |error| %>
-              <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-          <div class="col-md-6">
-            <%= form.submit "Agregar consulta", class: "w-100 btn btn-primary" %>
+            <div class="col-md-6">
+            <%= form.label :'Descripción de la consulta', class:"form-label" %>
+            <%= form.text_field :description, autofocus: true, autocomplete: "descripcion", class:"form-control", placeholder:"", value:"" %>
           </div>
-          
-          <div class="col-md-6">
-            <%= link_to "Volver atrás", dogs_path, class: "btn btn-outline-secondary w-100" %>
+          <hr>
+
+          <% if @vacuna.errors.any? %>
+          <div class="alert alert-danger flex-column align-items-stretch w-100" role="alert">
+            <ul class="list-unstyled">
+              <% @vacuna.errors.each do |error| %>
+                <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
+              <% end %>
+            </ul>
           </div>
-        </div>    
-      <% end %>
+        <% end %>
+
+            <div class="col-md-6">
+              <%= form.submit "Agregar consulta", class: "w-100 btn btn-primary" %>
+            </div>
+            
+            <div class="col-md-6">
+              <%= link_to "Volver atrás", dogs_path, class: "btn btn-outline-secondary w-100" %>
+            </div>
+          </div>    
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@
           <div class="col-md-6">
             <%= form.label :'Tipo de vacuna', class:"form-label" %>
             <br>
-            <%= form.select :tipoVacuna, options_for_select(['Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)'], { prompt: 'Seleccione el tipo de vacuna' }), { class: 'form-select form-control', required: 'required', id: 'tipoVacuna' } %>
+            <%= form.select :tipoVacuna, options_for_select(['Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)']), { prompt: 'Seleccione el tipo de vacuna' }, { class: 'form-select', required: 'required', id: 'tipoVacuna' } %>
           </div>
 
           <div class="col-md-6">
