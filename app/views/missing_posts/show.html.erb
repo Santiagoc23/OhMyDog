@@ -29,9 +29,20 @@
             <% end %>
             </div>  
           <% end %>
-          <div class="col-6">
-              <%= link_to "Volver atras", missing_posts_path, class: "btn btn-outline-secondary w-100 "%>
-          </div>  
+          <% if @missing_post.finished %>
+            <div>
+              <% if current_user.role == 'admin' %>
+                <%= link_to "Eliminar", confirm_delete_missing_post_path(@missing_post), class: "btn btn-danger w-100" %> 
+              <% end %>
+            </div>
+            <div>
+                <%= link_to "Volver atras", missing_posts_path, class: "btn btn-outline-secondary w-100 "%>
+            </div> 
+          <% else %>  
+            <div class="col-6">
+                <%= link_to "Volver atras", missing_posts_path, class: "btn btn-outline-secondary w-100 "%>
+            </div> 
+          <% end %>
         </div>
       </div>
     </div>

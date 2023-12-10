@@ -12,6 +12,18 @@ class AdminMailer < ApplicationMailer
     mail(to: dogmail, subject: asunto)
   end
 
+  def contact_by_email(user, missing_post, name, lastname, phone, mail, dogname, dogmail, dni) #es para adoptar
+    @name= name
+    @lastname= lastname
+    @phone= phone
+    @mail= mail
+    @dni= dni
+    @missing_post= missing_post
+    @user= user
+    asunto= '[CONTACTO] '+ name + ' vio la publicación del extravió de ' + dogname + ' y quiere contactarse!'
+    mail(to: dogmail, subject: asunto)
+  end
+
   def caregiver_notify_by_email(caregiver, name, surname, phoneNum, email, vetemail, mensaje, dni)
     @name= name
     @lastname= surname

@@ -9,6 +9,15 @@ class UserMailer < ApplicationMailer
     mail(to: dogmail, subject: asunto)
   end
 
+  def contact_by_email(name, lastname, phone, mail, dogname, dogmail) #es para adoptar
+    @name= name
+    @lastname= lastname
+    @phone= phone
+    @mail= mail
+    asunto= name + ' vio tu publicación sobre ' + dogname + ' y quiere contactarse!'
+    mail(to: dogmail, subject: asunto)
+  end
+
   def caregiver_notify_by_email(name, surname, phoneNum, email, caremail, mensaje)
     @name= name
     @lastname= surname

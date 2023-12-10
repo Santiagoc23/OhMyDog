@@ -7,4 +7,5 @@ class MissingPost < ApplicationRecord
     validates :age, presence: true
     validates :size, presence: true
     validates :zone, presence: true
+    has_one_attached :image
   end

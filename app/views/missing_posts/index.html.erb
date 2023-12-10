@@ -25,22 +25,29 @@
               <div class="card">
                   <div class="card-body text-center">
                       <h5 class="card-title display-6 font-weight-bold p-1"><%= missing_post.name %></h5>
-                      <p class="card-text"><strong>Raza: </strong><%= missing_post.breed %></p>
-
-                      <div class="row">
-                          <div class="col">
-                              <p class="card-text"><strong>Sexo: </strong><%= missing_post.gender %></p>
-                          </div>
-                          <div class="col">
-                              <p class="card-text"><strong>Edad: </strong><%= missing_post.age %></p>
-                          </div>
-                          <div class="col">
-                              <p class="card-text"><strong>Tamaño: </strong><%= missing_post.size %></p>
-                          </div>
-                      </div>
-                      <p> </p>
-                      <p class="card-text"><strong>Se perdió por: </strong><%= missing_post.zone %> </p>
-                      <p class="card-text"><strong>Información extra: </strong><%= missing_post.description %> </p>
+                      <% if missing_post.image.attached? %>
+                        <%= image_tag(missing_post.image, size: '200x200') %>
+                      <% end %>
+                      <% if missing_post.finished? %>
+                        <p class="card-text fs-5">¡ENCONTRADO!</p>
+                        <p class="card-text"><strong>Se habia perdido por: </strong><%= missing_post.zone %> </p>
+                      <% else %>
+                        <p class="card-text fs-5"><%= missing_post.breed %></p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text"><strong>Sexo: </strong><%= missing_post.gender %></p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text"><strong>Edad: </strong><%= missing_post.age %></p>
+                            </div>
+                            <div class="col">
+                                <p class="card-text"><strong>Tamaño: </strong><%= missing_post.size %></p>
+                            </div>
+                        </div>
+                        <p> </p>
+                        <p class="card-text"><strong>Se perdió por: </strong><%= missing_post.zone %> </p>
+                        <p class="card-text"><strong>Información extra: </strong><%= missing_post.description %> </p>
+                      <% end %>
                   </div>
 
                   <div class="card-body">

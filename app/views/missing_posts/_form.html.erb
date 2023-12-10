@@ -40,6 +40,11 @@
             <%= f.text_area :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder: "", required: "required"%>
           </div>
 
+          <div class="field">
+            <%= f.label :Foto %>
+            <%= f.file_field :image, accept: 'image/*' %>
+          </div>
+
         </div>
 
         <% if flash[:alert] %>

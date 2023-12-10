@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h4>El siguiente usuario:</h4>
+  <p>Nombre: <%= @user.name %>,</p>
+  <p>Apellido: <%= @user.surname %>,</p>
+  <p>Telefono: <%= @user.phoneNum %>,</p>
+  <p>Correo: <%= @user.email %>,</p>
+
+  <h4>Recibió una solicitud de contacto sobre la perdida de:</h4>
+  <p>Nombre: <%= @missing_post.name %>,</p>
+  <p>Raza: <%= @missing_post.breed %>,</p>
+  <p>Tamaño: <%= @missing_post.size %>,</p>
+  <p>Sexo: <%= @missing_post.gender %>,</p>
+
+  <h4>De una persona que dejó los siguientes datos:</h4>
+  <p>Nombre: <%= @name %>,</p>
+  <p>Apellido: <%= @lastname %>,</p>
+  <p>Telefono: <%= @phone %>,</p>
+  <p>Correo: <%= @mail %>,</p>
+  <p><span style="color: gray;">Este correo fue enviado desde la cuenta cuyo DNI asociado es: <%= @dni %></span></p>
+  <p><span style="color: gray;">(recuerde que si el DNI es -1 significa que hizo la adopción como invitado) </span></p>
+</body>
+</html>
