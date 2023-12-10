@@ -103,9 +103,14 @@ class AppointmentsController < ApplicationController
       end
       redirect_to requests_path
       flash[:notice] = "Turno confirmado"
-      if @appointment.state == 1
-
-      end
+      vacuna = Vacuna.new(
+        fechaAct: @appointment.time,
+        tipoVacuna: @appointment.query_type,
+        dog_id: @appointment.dog_id,
+      )
+      vacuna.save
+      vacuna
+      redirect_to appointments_path
     else
       redirect_to dashboard_home_path
     end
@@ -115,6 +120,13 @@ class AppointmentsController < ApplicationController
     if current_user.role == 'user'
       @appointment = Appointment.find(params[:id])
       @appointment.update(state: 5)
+      vacuna = Vacuna.new(
+        fechaAct: @appointment.time,
+        tipoVacuna: @appointment.query_type,
+        dog_id: @appointment.dog_id,
+      )
+      vacuna.save
+      vacuna
       redirect_to appointments_path
     else
       redirect_to dashboard_home_path

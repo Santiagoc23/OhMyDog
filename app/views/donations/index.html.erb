@@ -1,0 +1,59 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Campañas de donaciones</h2>
+  <hr>
+  <div>
+    <% if user_signed_in? == false %>
+      <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
+    <% elsif current_user.admin?%>
+      <%= link_to "Agregar donación", new_donation_path, class:"btn btn-primary me-2 mb-2" %>
+    <% end %>
+  </div>
+
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="my-3" id="donations">
+    <div class="row">
+      <% if @donations.present? == false %>
+        <p>Por el momento no hay publicadas campañas de donacion.</p>
+      <% end %>
+      <% @donations.each do |donation| %>        
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <%= render donation %>
+              <div class="text-center">
+                <% if user_signed_in? == false || current_user.role == 'user' %>
+                  <%= form_tag donate_donations_path, method: :post do %>
+                    <%= hidden_field_tag 'donation_title', donation.title %>
+                    <div class="input-group w-100 mb-3">
+                      <span class="input-group-text">$</span>
+                      <%= text_field_tag :amount, nil, type: "text", autofocus: true, autocomplete: "amount", class: "form-control", aria_label: "Amount (to the nearest dollar)", oninput: "handleDecimalInput(this)" %>
+                      <%= submit_tag "Donar", class: "btn btn-success" %>
+                      
+                    </div>
+                  <% end %>
+                <% else %>
+                  <%= link_to "Ver mas", donation, class:"btn btn-outline-secondary" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleDecimalInput(input) {
+    // Reemplaza las comas con puntos en el valor del campo
+    input.value = input.value.replace(',', '.');
+   }
+</script>

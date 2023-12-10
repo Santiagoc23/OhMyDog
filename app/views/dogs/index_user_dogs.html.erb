@@ -10,6 +10,8 @@
             <%= render dog %>
             <div class="text-center">
               <%= link_to "Ver mas", dog, class:"btn btn-outline-secondary" %>
+              <%= link_to "Ver historia clínica", medical_stories_path(dog_id: dog.id), class:"btn btn-outline-secondary" %>
+              <%= link_to "Ver libreta sanitaria", health_records_path(dog_id: dog.id), class:"btn btn-outline-secondary" %>
             </div>
             </div>
           </div>
