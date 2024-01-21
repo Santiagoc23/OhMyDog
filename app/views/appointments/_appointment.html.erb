@@ -1,0 +1,42 @@
+<div class="card-body" id="<%= dom_id appointment %>">
+  
+  <% if current_user.admin? %>
+    <h5><%= appointment.user.surname %> <%= appointment.user.name %></h5>
+  <% end %>
+  
+  <p class="card-title mb-2"><strong>Horario:</strong> <%= appointment.time.strftime("%d/%m/%Y %H:%M") %></p>
+  <div class="card-text py-1">
+    <p>
+      <strong>Estado:</strong>
+      <% case appointment.state %>
+        <% when 0 %>
+          Pendiente de confirmación
+        <% when 1 %>
+          Confirmado
+        <% when 2 %>
+          Esperando que veterinaria confirme el nuevo horario 
+        <% when 3 %>
+          Veterinaria quiere reprogramar 
+        <% when 4 %>
+          Cancelado
+        <% when 5 %> <!-- ESTE CONFIRMADO ES PARA BLOQUEAR QUE SE REPROGRAME MAS DE 1 VEZ -->
+          Confirmado
+        <% when 44 %>
+          Cancelado
+        <% else %>
+          <%= "Ocurrió un error recuperando el estado del turno." %>
+      <% end %>
+    </p>
+    <p><strong>Tipo de consulta:</strong> <%= appointment.query_type %></p>
+    
+    <% if appointment.dog_id.nil? %>
+      <p><strong>Turno para: </strong>Nuevo perro</p>
+    <% else %>
+       <p><strong>Turno para: </strong> <%= appointment.dog.name %></p>
+    <% end %>
+    
+    <% if !appointment.message.empty? %>
+      <p><strong>Mensaje:</strong> <%= appointment.message %></p>
+    <% end %>   
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<h2>Editar consulta</h2>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-8">
+      <%= form_with(model: @vacuna) do |form| %>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <%= form.label :'Fecha de consulta', class:"form-label" %>
+            <%= form.date_field :fechaAct, class:"form-control", id: "fechaAct" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= form.label :'Tipo de consulta', class:"form-label" %>
+            <br>
+            <%= form.select :tipoVacuna, options_for_select(['Consulta general', 'Urgencias', 'Castración', 'Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)']), { prompt: 'Seleccione el tipo de vacuna' }, { class: 'form-select', required: 'required', id: 'tipoVacuna' } %>
+          </div>
+
+          <div class="col-md-6">
+            <%= form.label :'Peso (en kg)', class:"form-label" %>
+            <%= form.number_field :peso, min:1, class:"form-control" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= form.label :'Descripcion de la consulta:', class:"form-label" %>
+            <%= form.text_field :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"", value:"", required: "required" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= form.submit "Editar consulta", class: "w-100 btn btn-primary" %>
+          </div>
+
+          <div class="col-md-6">
+            <%= link_to "Volver atrás", medical_stories_path(dog_id: @vacuna.dog_id), class: "btn btn-outline-secondary w-100" %>
+          </div>
+        </div>    
+      <% end %>
+    </div>
+  </div>
+</div>

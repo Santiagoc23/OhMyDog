@@ -1,0 +1,45 @@
+<div class="card-body" id="<%= dom_id appointment %>">
+  <%= form_with(model: appointment) do |form| %>
+    
+      <div class="modal-header border-bottom-0">
+        <h3 class="modal-title fs-5">Eleccion de fecha y hora:</h3>
+      </div>
+      <div class="modal-body py-0">
+        <p>Franja horario valida de lunes a sabados<br>Horario: <span class="fw-bold">09:00 a 13:00 | 14:00 a 18:00</span><br></p>
+        
+        <% if appointment.errors.any? %>
+          <div class="alert alert-danger flex-column align-items-stretch w-100" role="alert">
+            <ul class="list-unstyled">
+              <% appointment.errors.each do |error| %>
+                <li><%= error.full_message.split(" ")[1..].join(" ") %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="modal-footer flex-column align-items-stretch w-100  pb-3 border-top-0">
+        <%= form.datetime_field :time, class: "form-control form-control-inline" %>
+        <div class="col-sm-12">
+          <%= form.label :Tipo_de_consulta, class:"form-label" %>
+          <% if  current_user.admin? %>
+            <%= form.text_field :query_type, value: @appointment.query_type, class: 'form-control', disabled: true %>
+          <% else %>
+            <%= form.select :query_type, options_for_select(['Consulta general', 'Urgencias', 'Castración', 'Vacunación tipo A (enfermedad)', 'Vacunación tipo B (antiparasitaria)', 'Vacunación tipo B (antirrábica)']), { prompt: 'Seleccione el tipo de consulta'}, { class: 'form-select', required: 'required' } %>     
+          <% end %>    
+        </div>
+        <div class="col-sm-12">
+          <%= form.label :Perro, class:"form-label" %> 
+          <% if  current_user.admin? && @appointment.dog_id.present?%>
+            <%= form.text_field :dog_name, value: @appointment.dog.name, class: 'form-control', disabled: true %>
+          <% elsif current_user.admin? && @appointment.dog_id.nil? %>
+            <%= form.text_field :dog_name, value: 'Nuevo perro', class: 'form-control', disabled: true %>
+          <% else %>
+            <%= form.collection_select :dog_id, (current_user.dogs + [Dog.new(id: 0, name: 'Nuevo perro')]), :id, :name, { prompt: "Seleccionar perro" },{ class: 'form-select' , required: 'required' } %> 
+          <% end %>        
+        </div>
+          <%= form.hidden_field :source, value: @from %>
+          <%= form.submit "Programar turno", class: "btn btn-primary mt-2"%>
+  <% end %>
+
+  

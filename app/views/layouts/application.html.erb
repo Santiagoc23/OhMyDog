@@ -8,9 +8,43 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <style>
+    .text-custom {
+      color: #EB8247; /* Cambia este valor al color que desees */
+    }
+    .example-icon {
+      width: 20px; /* ajusta el tamaño según tus necesidades */
+      height: auto; /* mantiene la proporción original */
+    }
+  </style>
+
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="h-100">
+    <header class="navbar sticky-top bg-body-tertiary flex-md-nowrap p-2 shadow" data-bs-theme="dark">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-custom fw-bold fs-4" href="#" id="logo">OhMyDog</a>
+      <% if user_signed_in? %>
+        <ul class="navbar-nav flex-row d-md-none">
+          <li class="nav-item text-nowrap">
+            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="bi bi-list"></i>
+            </button>
+          </li>
+        </ul>
+      <% end %>
+    </header>
+
+    <div class="container-fluid ">
+      <div class="row vh-100">
+        <% if user_signed_in? %>
+          <%= render "/shared/sidebar"%>
+        <% end %>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div>
+            <%= yield %>
+          </div>
+        </main>
+      </div>
+    </div>
   </body>
 </html>

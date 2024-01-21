@@ -1,0 +1,59 @@
+<div class="container-fluid mt-4 px-2">
+  
+  <% if current_user.admin? %>
+    <h2>Perros</h2>
+    <hr>
+    <div>
+      <%= link_to "Agregar perro", new_dog_path, class:"btn btn-secondary me-2" %>
+      <%= form_tag dogs_path, method: :get, class: "my-3" do %>
+        <div class="input-group w-25">
+          <%= text_field_tag :dni_search, params[:dni_search], class: "form-control w-25", placeholder: "DNI del dueño"%>
+          <%= button_tag(type: 'submit', class: 'btn btn-success') do %>
+            <i class="bi bi-search"></i>
+          <% end %>
+          <!-- Botón para restaurar la tabla completa -->
+          <%= link_to dogs_path, class:"btn btn-outline-secondary" do%>
+            <i class="bi bi-arrow-counterclockwise"></i>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else%>
+    <h2>Mis perros</h2>
+    <hr>
+  <% end %>
+
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="my-3" id="dogs">
+    <div class="row">
+      <% if @dogs.present? == false && current_user.admin? %>
+        <p>Por el momento no hay perros registrados.</p>
+      <% elsif @dogs.present? == false %>
+        <p>Todavia no has asistido a la veterinaria con tus perros.</p>
+      <% end %>
+      <% @dogs.each do |dog| %>        
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+          <div class="card">
+            <%= render dog %>
+            <div class="card-footer bg-white">
+              <div class="d-flex justify-content-between">
+                <%= link_to "Historia clínica", medical_stories_path(dog_id: dog.id), class:"m-2 btn btn-outline-secondary btn-sm" %>
+                <%= link_to "Libreta canina", health_records_path(dog_id: dog.id), class:"m-2 btn btn-outline-secondary btn-sm" %>
+                <%= link_to "Ver mas", dog, class:" m-2 btn btn-outline-secondary btn-sm" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Agregar publicación de adopción</h2>
+  <hr>
+  <%= render "form", adoption: @adoption %>
+
+  <div class=""> 
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center mt-2">
+        <div class="col-md-7 col-lg-8">
+          <%= link_to "Volver atras", adoptions_path, class: "btn btn-outline-secondary w-100 mb-4"%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

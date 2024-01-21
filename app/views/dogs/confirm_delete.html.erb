@@ -1,0 +1,18 @@
+<div class="container-fluid mt-4 px-2">
+  <div class="modal modal-sheet position-static d-block p-4 py-md-2" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header border-bottom-0">
+          <h2 class="modal-title fs-5 ">Confirmar eliminación</h2>
+        </div>
+        <div class="modal-body py-0">
+            <p>¿Estás seguro de que deseas eliminar a <%= @dog.name%>?</p>
+        </div>
+        <div class="modal-footer flex-column align-items-stretch w-100 pb-3 border-top-0">
+          <%= button_to "Confirmar", @dog, method: :delete, class:'btn btn-danger w-100' %>
+          <%= link_to "Volver atras", dog_path, class:"btn btn-outline-secondary" %>
+        </div>     
+      </div>
+    </div>
+  </div>
+</div>

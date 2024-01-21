@@ -1,0 +1,35 @@
+<div class="container-fluid py-3">
+    <h2>Administradores</h2>
+    <hr>
+    <%= link_to "Agregar admin", new_admin_register_path, class:"btn btn-secondary px-3 mb-2" %>
+
+
+    <% if flash[:alert].present? %>
+        <div class="alert alert-danger">  
+        <%= flash[:alert] %>
+        </div>
+    <% elsif flash[:notice].present? %>
+        <div class="alert alert-success">  
+        <%= flash[:notice] %>
+        </div>
+    <% end %>
+
+    <table class="table table-striped my-5">
+        <thead class="thead-dark">
+            <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+            <tr>
+                <td><%= user.name %></td>
+                <td><%= user.surname %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+

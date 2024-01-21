@@ -1,0 +1,67 @@
+<div class="container-fluid mt-4 px-2">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Libreta unica sanitaria canina</h2>
+    <%= link_to "Volver atras", dogs_path, class:"btn btn-secondary px-3" %>
+  </div>
+  <hr>
+
+  <h3 class="fs-5"><strong>DATOS DEL PERRO</strong></h3>
+
+  <strong>Nombre: </strong><%= @dogData.name %></p> 
+  <strong>Raza: </strong><%= @dogData.breed %></p>   
+  <strong>Sexo: </strong><%= @dogData.gender %></p>
+  <strong>Edad: </strong><%= @dogData.age %></p> 
+  <strong>Fecha de nacimiento: </strong><%= @dogData.birthdate.strftime('%d/%m/%Y') %></p>
+  <hr>
+
+  <h3 class="fs-5 my-3"><strong>HISTORIAL DE VACUNACIÓN</strong></h3>
+
+  <%= link_to download_historia_clinica_path(@dogData.id, format: :pdf), class: "btn btn-primary" do %>
+    <i class="bi bi-filetype-pdf"></i> Exportar pdf
+  <% end %>
+
+  <table class="mt-3" style="border-collapse: collapse; width: 100%;">
+    <thead>
+      <tr style="border: 1px solid #ddd; background-color: #f2f2f2;">
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Fecha de vacunación</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Tipo de vacuna</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Peso de <%= @dogData.name %></th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Enfermedad</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Cantidad de dosis</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Medicación</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Próxima fecha de vacunación</th>
+        <% if current_user.admin? %>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Edición</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: center;">Eliminación</th>
+      <% end %>
+      
+      </tr>
+      </thead>
+      <tbody>
+        <% @vacunasDog.each do |vacuna| %>
+          <% next_date = nil %>
+          <% idPerro = vacuna.dog_id %>
+          <% if ((vacuna.tipoVacuna == "Vacunación tipo A (enfermedad)") || (vacuna.tipoVacuna == "Vacunación tipo B (antiparasitaria)") || (vacuna.tipoVacuna == "Vacunación tipo B (antirrábica)"))%>
+            <% if vacuna.tipoVacuna == "Vacunación tipo A (enfermedad)" %>
+              <% vacuna.fechaProx = @dogData.age < 4 ? vacuna.fechaAct + 21.days : vacuna.fechaAct + 1.year %>
+            <% elsif vacuna.tipoVacuna == "Vacunación tipo B (antiparasitaria)" || vacuna.tipoVacuna == "Vacunación tipo B (antirrábica)" %>
+              <% vacuna.fechaProx = vacuna.fechaAct + 1.year %>
+            <% end %>
+            <tr style="border: 1px solid #ddd;">
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.fechaAct.strftime('%Y-%m-%d') %></td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.tipoVacuna %></td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.peso %>kg</td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.enfermedad %></td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.dosis %>ml</td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.medicacion %></td>
+              <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= vacuna.fechaProx&.strftime('%Y-%m-%d') %></td>
+              <% if current_user.admin? %>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= link_to "Editar", edit_vacuna_path(vacuna.id), class: "btn btn-warning px-3" %></td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: center;"><%= link_to "Eliminar", confirm_delete_vacuna_path(vacuna.id), class: "btn btn-danger w-100" %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+      </table>
+</div>

@@ -1,0 +1,25 @@
+<main class="form-signin w-100 m-auto">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <h2 class="h3 mb-3 fw-normal">Iniciar sesión</h2>
+    
+    <div class="form-floating">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control", id:"floatingInput", placeholder:"name@example.com" %>
+      <%= f.label :"Correo electronico", for:"floatingInput"%>
+    </div>
+    <div class="form-floating">
+      <%= f.password_field :password, autocomplete: "current-password", class:"form-control", id:"floatingPassword", placeholder:"Password" %>
+      <%= f.label :contraseña, for:"floatingPassword" %>
+    </div>
+
+    <div class="text-center my-3">
+        <% if alert %>
+          <p class="alert alert-danger p-1"><%= alert %></p>
+        <% end %>
+    </div>
+
+
+     <%= f.submit "Iniciar Sesion", class:"btn btn-primary w-100 my-2 py-2", data: { turbo: false } %>
+
+  <% end %>
+</main>
+</body>

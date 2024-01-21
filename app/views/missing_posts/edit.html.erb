@@ -1,0 +1,15 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Editar publicación</h2>
+  <hr>
+  <%= render "form", missing_post: @missing_post %>
+
+  <div class=""> 
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center mt-2">
+        <div class="col-md-7 col-lg-8">
+          <%= link_to "Volver atras", @missing_post, class: "btn btn-outline-secondary w-100 mt-0 mb-4"%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

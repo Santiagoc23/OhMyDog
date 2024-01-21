@@ -1,0 +1,66 @@
+
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center mt-1">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Datos del perro</h4>
+        <%= form_with(model: adoption) do |f| %>
+          <div class="row g-3">
+            <div class="col-sm-6">
+               <%= f.label :Nombre, class:"form-label" %>
+               <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control", placeholder:"Opcional"%>
+            </div>
+
+            <div class="col-sm-6">
+               <%= f.label :Raza, class:"form-label" %>
+               <%= f.text_field :race, autofocus: true, autocomplete: "race", class:"form-control", placeholder:"", required: "required"%>
+            </div>
+              
+            <div class="col-4">
+               <%= f.label :Tamaño, class:"form-label" %>
+               <%= f.select :size, ['Muy chico','Chico','Mediano','Grande','Muy grande'], { prompt: 'Selecciona el tamaño'}, { class: 'form-select', required: 'required', placeholder:""} %>
+            </div>
+            
+            <div class="col-4">
+              <%= f.label :Sexo, class: "form-label" %>
+              <%= f.select :sex, ['Hembra', 'Macho'], { prompt: 'Selecciona el sexo' }, { class: 'form-select', required: 'required', placeholder:""} %>
+            </div>
+
+            <div class="col-4">
+              <%= f.label :Edad, class: "form-label" %>
+              <%= f.select :age, ['Cachorro (0-1 años)', 'Joven (1-3 años)', 'Adulto (3-6 años)', 'Senior (6-10 años)', 'Anciano (+10 años)'], { prompt: 'Selecciona la edad'}, { class: 'form-select', required: 'required', placeholder:"" } %>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :'Descripción', class:"form-label" %>
+              <%= f.text_area :description, autofocus: true, autocomplete: "description", class:"form-control", placeholder:"Ej: personalidad, apariencia, ...", required: "required"%>
+            </div>
+
+            <div class="col-12">
+              <%= f.label :Situación, class:"form-label" %>
+              <%= f.text_area :situation, autofocus: true, autocomplete: "situation", class:"form-control", placeholder:"", required: "required"  %>
+            </div>
+          </div>
+
+          <% if flash[:alert] %>
+            <div class="alert alert-danger my-2 p-1 text-center">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>   
+
+          <% if adoption.errors.any? %>
+            <div class="alert alert-danger my-2 p-1 text-center">
+              <ul>
+                <% adoption.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <hr class="mt-4">
+          <%= f.submit "Publicar adopción", class:"w-100 btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+

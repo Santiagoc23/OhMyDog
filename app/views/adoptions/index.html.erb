@@ -1,0 +1,48 @@
+<div class="container-fluid mt-4 px-2">
+  <h2>Adopciones</h2>
+  <hr>
+  <% if user_signed_in? == false %>
+    <%= link_to "Volver atras", root_path, class:"btn btn-outline-secondary px-3 mb-2"%>
+  <% end %>
+  <% if user_signed_in? %>
+    <%= link_to "Publicar adopción", new_adoption_path, class:"btn btn-primary px-3 mb-2"%>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger">  
+      <%= flash[:alert] %>
+    </div>
+  <% elsif flash[:notice].present? %>
+    <div class="alert alert-success">  
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  
+<div class="my-3" id="appointments">
+    <div class="row">
+      <% if @adoptions.present? %>
+        <% @adoptions.each do |adoption| %>
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-2"><%= adoption.name %></h5>
+                        <p class="card-text"><strong>Raza: </strong><%= adoption.race %></p>   
+                        <p  class="card-text"><strong>Sexo: </strong><%= adoption.sex %></p>
+                        <p class="card-text"><strong>Edad: </strong><%= adoption.age %></p>
+                        <p class="card-text"><strong>Tamaño: </strong><%= adoption.size %></p>
+                        <p class="card-text"><strong>Descripción: </strong><%= adoption.description %> </p>
+                        <p class="card-text"><strong>Situación: </strong><%= adoption.situation %> </p>         
+                    </div>
+                    <div class = card-body>
+                        <button class="btn btn-secondary d-inline-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#show_request"><%= link_to "VER MAS  ", adoption, class:"text-white text-decoration-none pe-2"%><i class="bi bi-plus-circle align-items-center mx-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+      <% else %>
+        <div class="col-12">
+          <p>No hay adopciones publicadas en este momento, se el primero en buscarle nuevo hogar a tu amigo peludo!</p>
+        </div>
+      <% end %>
+    </div>
+</div>   
+
