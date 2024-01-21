@@ -84,3 +84,5 @@ gem 'mercadopago-sdk', '~> 2.2', '>= 2.2.1'
 gem 'dotenv-rails', groups: [:development, :test]
 gem "prawn", "~> 2.4"
 
+
+gem "matrix", "~> 0.4.2"

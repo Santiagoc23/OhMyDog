@@ -292,6 +292,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener
+  matrix (~> 0.4.2)
   mercadopago-sdk (~> 2.2, >= 2.2.1)
   pdfkit
   prawn (~> 2.4)
